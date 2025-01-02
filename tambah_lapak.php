@@ -144,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           </a>
         </nav>
       </div>
-      <div class="absolute bottom-0 w-full p-6">
+      <div class="absolute bottom-0 p-6">
         <a class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md mt-2" href="#">
           <i class="fas fa-sign-out-alt mr-3"></i>
           <form action="" method="post">
@@ -176,6 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               <label class="block text-sm font-medium text-gray-700 mb-2">Deskripsi</label>
               <textarea class="w-full py-2 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Tuliskan Deskripsi Lapak" rows="4" name="deskripsi" required></textarea>
             </div>
+            
             <div class="col-span-2">
   <label class="block text-sm font-medium text-gray-700 mb-2">Gambar</label>
   <div id="drop-area" class="border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center w-full">
@@ -183,10 +184,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <i class="fas fa-image text-gray-400 text-4xl mb-2"></i>
       <p class="text-gray-500" id="file-label">+ Tambahkan Gambar dengan Klik atau seret disini</p>
     </div>
-    <input type="file" id="gambar" name="gambar[]" class="hidden" accept="image/*" multiple />
+    <input type="file" id="gambar" name="gambar[]" class="hidden" accept="image/*" multiple required/>
     <div id="preview-area" class="mt-4 flex flex-wrap gap-4"></div>
   </div>
 </div>
+<div class="col-span-2">
+<div class="flex justify-between items-center mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Produk</label>
+                <a href="tambah_produk.php" class="bg-teal-500 text-white px-4 py-2 rounded-md">Klik untuk menambahkan Produk</a>
+            </div>
+            </div>
+            
           </div>
         </div>
       </form>
