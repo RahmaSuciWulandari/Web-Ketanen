@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
 
-        header("Location: adminlapak.php");
+        header("Location: tambah_lapak.php");
         exit();
     }
 }
