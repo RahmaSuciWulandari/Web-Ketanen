@@ -138,10 +138,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <i class="fas fa-map-marker-alt mr-3"></i>
             <span>Lapak</span>
           </a>
-          <a href="admintentang.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
+          <!-- <a href="admintentang.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
             <i class="fas fa-newspaper mr-3"></i>
             <span>Tentang</span>
-          </a>
+          </a> -->
         </nav>
       </div>
       <div class="absolute bottom-0 p-6">

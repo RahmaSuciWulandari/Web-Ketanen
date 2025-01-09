@@ -16,7 +16,7 @@
     <div class="max-w-8xl mx-auto bg-white p-6 rounded-lg shadow-md">
         <!-- Back Button and Divider -->
         <div class="flex items-center mb-6">
-            <i class="fas fa-arrow-left text-xl text-gray-600 mr-4 cursor-pointer"></i>
+            <!--<i class="fas fa-arrow-left text-xl text-gray-600 mr-4 cursor-pointer"></i>-->
             <div class="border-t-2 border-gray-300 flex-grow"></div>
         </div>
         <!-- Title Section -->

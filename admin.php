@@ -67,21 +67,21 @@ if (!isset($_SESSION["username"])) {
     <i class="fas fa-map-marker-alt mr-3"></i>
     <span>Lapak</span>
   </a>
-  <a href="admintentang.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
+  <!-- <a href="admintentang.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
     <i class="fas fa-newspaper mr-3"></i>
     <span>Tentang</span>
-  </a>
+  </a> -->
 </nav>
 
-    </div>
-    <div class="absolute bottom-0 w-full p-6">
-     <a class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md mt-2" href="#">
-      <i class="fas fa-sign-out-alt mr-3">
-      </i>
-      <form action="" method="post">
-        <input type="submit" name="logout" value="Logout">
+</div>
+    <div class="absolute bottom-0 p-6">
+    <div class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md w-58">
+    <i class="fas fa-sign-out-alt mr-3"></i>
+    <form action="" method="post">
+        <input type="submit" name="logout" value="Logout" class="bg-transparent text-gray-600 hover:text-gray-900 cursor-pointer">
     </form>
-     </a>
+</div>
+
      <p class="text-gray-400 text-sm mt-6">
       © KKNUQDesaKetanen
      </p>

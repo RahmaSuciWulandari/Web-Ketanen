@@ -65,10 +65,10 @@ $pages = ceil($total / $limit);
     <i class="fas fa-map-marker-alt mr-3"></i>
     <span>Lapak</span>
   </a>
-  <a href="admintentang.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
+  <!-- <a href="admintentang.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
     <i class="fas fa-newspaper mr-3"></i>
     <span>Tentang</span>
-  </a>
+  </a> -->
 </nav>
 
     </div>
@@ -99,7 +99,7 @@ $pages = ceil($total / $limit);
     <table class="min-w-full bg-white">
         <thead>
             <tr>
-                <th class="py-2 px-4 bg-gray-100 text-left text-sm font-semibold text-gray-600">Gambar</th>
+                <th class="py-2 px-4 bg-gray-100 text-left text-sm font-semibold text-gray-600">No.</th>
                 <th class="py-2 px-4 bg-gray-100 text-left text-sm font-semibold text-gray-600">Nama Lapak</th>
                 <th class="py-2 px-4 bg-gray-100 text-left text-sm font-semibold text-gray-600">Alamat</th>
                 <th class="py-2 px-4 bg-gray-100 text-left text-sm font-semibold text-gray-600">Produk</th>
@@ -107,39 +107,39 @@ $pages = ceil($total / $limit);
             </tr>
         </thead>
         <tbody>
-            <?php while ($row = $result->fetch_assoc()): ?>
-                <tr class="hover:bg-gray-50">
-                    <!-- Gambar -->
-                    <td class="py-2 px-4 border-b">
-                        <img src="<?php echo $row['gambar']; ?>" alt="Gambar Lapak" class="w-16 h-16 rounded-md object-cover">
-                    </td>
-                    <!-- Nama Lapak -->
-                    <td class="py-2 px-4 border-b font-medium text-gray-800"><?php echo $row['nama_lapak']; ?></td>
-                    <!-- Alamat -->
-                    <td class="py-2 px-4 border-b text-gray-600"><?php echo $row['alamat']; ?></td>
-                    <!-- Produk -->
-                    <td class="py-2 px-4 border-b text-teal-500">
-                        <a href="produk_lapak.php?id=<?php echo $row['id']; ?>" class="hover:underline">Cek Produk</a>
-                    </td>
-                    <!-- Action -->
-                    <td class="py-2 px-4 border-b">
-                        <div class="flex space-x-2">
-                            <!-- Edit -->
-                            <a href="edit_lapak.php?id=<?php echo $row['id']; ?>" class="text-yellow-500 hover:text-yellow-600">
-                                <i class="fas fa-edit"></i> Edit
-                            </a>
-                            <!-- Hapus -->
-                            <form action="hapus_lapak.php" method="POST" class="inline">
-                                <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                <button type="submit" class="text-red-500 hover:text-red-600" onclick="return confirm('Apakah Anda yakin ingin menghapus?')">
-                                    <i class="fas fa-trash"></i> Hapus
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-            <?php endwhile; ?>
-        </tbody>
+                            <?php 
+                            $no = $start + 1; 
+                            while ($row = $result->fetch_assoc()): ?>
+                                <tr class="hover:bg-gray-50">
+                                    <!-- Nomor -->
+                                    <td class="py-2 px-4 border-b font-medium text-gray-800"><?php echo $no++; ?></td>
+                                    <!-- Nama Lapak -->
+                                    <td class="py-2 px-4 border-b font-medium text-gray-800"><?php echo $row['nama_lapak']; ?></td>
+                                    <!-- Alamat -->
+                                    <td class="py-2 px-4 border-b text-gray-600"><?php echo $row['alamat']; ?></td>
+                                    <!-- Produk -->
+                                    <td class="py-2 px-4 border-b text-teal-500">
+                                        <a href="produk_lapak.php?id=<?php echo $row['id']; ?>" class="bg-teal-500 text-white px-4 py-2 rounded-md">Cek Produk</a>
+                                    </td>
+                                    <!-- Action -->
+                                    <td class="py-2 px-4 border-b">
+                                        <div class="flex space-x-2">
+                                            <!-- Edit -->
+                                            <a href="edit_lapak.php?id=<?php echo $row['id']; ?>" class="text-yellow-500 hover:text-yellow-600">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </a>
+                                            <!-- Hapus -->
+                                            <form action="hapus_lapak.php" method="POST" class="inline">
+                                                <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                                                <button type="submit" class="text-red-500 hover:text-red-600" onclick="return confirm('Apakah Anda yakin ingin menghapus?')">
+                                                    <i class="fas fa-trash"></i> Hapus
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
     </table>
     <div class="mt-4">
     <?php for ($i = 1; $i <= $pages; $i++): ?>
@@ -152,7 +152,7 @@ $pages = ceil($total / $limit);
             </div>
         </div>
     </div>
-    <scripset
+    <script>
   document.addEventListener("DOMContentLoaded", () => {
     const navLinks = document.querySelectorAll("nav a");
 

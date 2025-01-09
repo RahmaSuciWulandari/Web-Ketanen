@@ -109,25 +109,27 @@
   
   input[type=submit]{
     width: 30vh;
-    height: 25px;
+    height: 5vh;
     background-color: teal;
     color: rgb(255, 253, 253);
     padding: 4px 10px;
     margin: 8px 0;
     border: 1px solid rgb(226, 219, 231);
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
   }
   input[type=submit]:hover {
-    background-color: rgb(158, 236, 241);
+    background-color: rgb(120, 246, 255);
     transition: .3s;
+    color: #000;
+    animation: wobble 2s ease 0s infinite;
   }
-  h2,h5,i{
+  /* h2,h5,i{
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
-  }
+  } 
   h3{
     display: flex;
     justify-content: center;
@@ -135,7 +137,7 @@
     border-bottom: 3px solid teal;
     border-radius: 15px;
     padding-bottom: 10px;
-  }
+  }*/
   .logout{
     display: flex;
     position: absolute;
@@ -329,6 +331,8 @@ h2 {
 }
 
 input[type="submit"] {
+  z-index: 10;
+  position: relative;
     background-color: teal;
     color: white;
     border: none;
@@ -342,6 +346,7 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     background-color: rgba(0, 128, 128, 0.8);
+    animation: wobble 2s ease 0s infinite;
 }
 
       background: transparent;
@@ -351,11 +356,27 @@ input[type="submit"]:hover {
       width: 45vh;
       margin-left: -70px;
   }
-  #emailt{
-      background: transparent;
-      outline: none;
-      padding: 6px;
-      border-style: none;
-      width: 45vh;
-      margin-left: -70px;
+
+  @keyframes fade-in-down {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
   }
+  
+  .fadein {
+    animation: fade-in-down 1.5s ease-in 0s 1;
+    
+  }
+
+  @keyframes wobble {
+    0%, 100% { transform: translateX(0%); }
+    15% { transform: translateX(-25%) rotate(-5deg); }
+    30% { transform: translateX(20%) rotate(3deg); }
+    45% { transform: translateX(-15%) rotate(-3deg); }
+    60% { transform: translateX(10%) rotate(2deg); }
+    75% { transform: translateX(-5%) rotate(-1deg); }
+  }
+
+
+  
+
+  
