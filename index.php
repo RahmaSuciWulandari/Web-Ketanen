@@ -130,10 +130,10 @@
       <a href="isiproduk.php"  class="bg-white p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
        <img alt="Gambar produk 1" class="w-full h-48 object-cover rounded-t-lg" height="200" src="https://storage.googleapis.com/a1aa/image/TYymQVImLS6UE1AgX9xX8LxUFYH5qVlUb1iXen0RLeqBZTenA.jpg" width="300"/>
        <h3 class="text-2xl font-bold mt-4">
-        Produk 1
+        Produk 1 3
        </h3>
        <p class="text-gray-700 mt-2">
-        Deskripsi singkat produk 1.
+        Deskripsi singkat produk 1 bla bla.
        </p>
       </a>
       <div class="bg-white p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
