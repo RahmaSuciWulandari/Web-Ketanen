@@ -119,18 +119,18 @@ $pages = ceil($total / $limit);
                                     <td class="py-2 px-4 border-b text-gray-600"><?php echo $row['alamat']; ?></td>
                                     <!-- Produk -->
                                     <td class="py-2 px-4 border-b text-teal-500">
-                                        <a href="produk_lapak.php?id=<?php echo $row['id']; ?>" class="bg-teal-500 text-white px-4 py-2 rounded-md">Cek Produk</a>
+                                        <a href="tambah_produk.php?id=<?php echo $row['id_lapak']; ?>" class="bg-teal-500 text-white px-4 py-2 rounded-md">Cek Produk</a>
                                     </td>
                                     <!-- Action -->
                                     <td class="py-2 px-4 border-b">
                                         <div class="flex space-x-2">
                                             <!-- Edit -->
-                                            <a href="edit_lapak.php?id=<?php echo $row['id']; ?>" class="text-yellow-500 hover:text-yellow-600">
+                                            <a href="edit_lapak.php?id=<?php echo $row['id_lapak']; ?>" class="text-yellow-500 hover:text-yellow-600">
                                                 <i class="fas fa-edit"></i> Edit
                                             </a>
                                             <!-- Hapus -->
                                             <form action="hapus_lapak.php" method="POST" class="inline">
-                                                <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                                                <input type="hidden" name="id" value="<?php echo $row['id_lapak']; ?>">
                                                 <button type="submit" class="text-red-500 hover:text-red-600" onclick="return confirm('Apakah Anda yakin ingin menghapus?')">
                                                     <i class="fas fa-trash"></i> Hapus
                                                 </button>

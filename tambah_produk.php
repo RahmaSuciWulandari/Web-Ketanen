@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $harga = $item['harga'];
 
             // Insert product into database and get the generated ID
-            $sql = "INSERT INTO produk (id_lapak, nama_produk, kategori, deskripsi, keunggulan, harga) 
+            $sql = "INSERT INTO produk (id_lapak, nama_produk, kategori_produk, deskripsi, keunggulan, harga) 
                     VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $koneksi->prepare($sql);
             $stmt->bind_param("ssssss", $id_lapak, $nama_produk, $kategori, $deskripsi, $keunggulan, $harga);
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $target_file = $upload_dir . $image_name;
 
                         if (move_uploaded_file($files['tmp_name'][$index]['gambar'][$file_index], $target_file)) {
-                            // Insert each image file into the database
+                            
                             $sql_image = "INSERT INTO produk_gambar (id_produk, file_path) VALUES (?, ?)";
                             $stmt_image = $koneksi->prepare($sql_image);
                             $stmt_image->bind_param("is", $id_produk, $target_file);

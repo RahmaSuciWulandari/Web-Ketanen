@@ -39,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    // Convert uploaded file names to JSON for database storage
     $uploaded_files_json = json_encode($uploaded_files);
 
     $sql = "INSERT INTO lapak (nama_lapak, alamat, deskripsi, gambar) VALUES (?, ?, ?, ?)";
@@ -188,12 +187,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div id="preview-area" class="mt-4 flex flex-wrap gap-4"></div>
   </div>
 </div>
-<div class="col-span-2">
+<!-- <div class="col-span-2">
 <div class="flex justify-between items-center mb-6">
             <label class="block text-sm font-medium text-gray-700 mb-2">Produk</label>
                 <a href="tambah_produk.php" class="bg-teal-500 text-white px-4 py-2 rounded-md">Klik untuk menambahkan Produk</a>
             </div>
-            </div>
+            </div> -->
             
           </div>
         </div>
