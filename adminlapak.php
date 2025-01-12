@@ -119,7 +119,7 @@ $pages = ceil($total / $limit);
                                     <td class="py-2 px-4 border-b text-gray-600"><?php echo $row['alamat']; ?></td>
                                     <!-- Produk -->
                                     <td class="py-2 px-4 border-b text-teal-500">
-                                        <a href="tambah_produk.php?id=<?php echo $row['id_lapak']; ?>" class="bg-teal-500 text-white px-4 py-2 rounded-md">Cek Produk</a>
+                                        <a href="cekproduk.php?id=<?php echo $row['id_lapak']; ?>" class="bg-teal-500 text-white px-4 py-2 rounded-md"">Cek Produk</a>
                                     </td>
                                     <!-- Action -->
                                     <td class="py-2 px-4 border-b">
@@ -141,11 +141,11 @@ $pages = ceil($total / $limit);
                             <?php endwhile; ?>
                         </tbody>
     </table>
-    <div class="mt-4">
+    <div class="mt-4 flex justify-center">
     <?php for ($i = 1; $i <= $pages; $i++): ?>
         <a href="?page=<?php echo $i; ?>" class="px-3 py-2 bg-gray-200 rounded-md hover:bg-gray-300"><?php echo $i; ?></a>
     <?php endfor; ?>
-</div>
+</div><br/>
 
 </div>
 

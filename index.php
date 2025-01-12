@@ -14,9 +14,11 @@
  <body class="font-roboto bg-gray-100">
   <header class="bg-teal-700 text-white p-6 shadow-lg">
    <div class="container mx-auto flex justify-between items-center">
-    <h1 class="text-3xl font-bold">
-     WGPedia
+   <div class="flex items-center"><img src="logowgp.png" alt="Logo WGPedia" class="h-10 w-10 mr-2"/> 
+   <h1 class="text-3xl font-bold">
+     WGP
     </h1>
+    </div>
     <nav>
      <ul class="hidden md:flex space-x-6">
       <li>

@@ -1,20 +1,32 @@
+<!DOCTYPE html>
 <html lang="en">
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title>
-   UMKM Desa Ketanen
+   HubSpot About Us
   </title>
   <script src="https://cdn.tailwindcss.com">
   </script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+       font-family: 'Open Sans', sans-serif;
+   }
+
+   .full-width-bg {
+       width: 100%;
+       margin-left: 0;
+       margin-right: 0;
+   }
+  </style>
  </head>
  <body class="font-roboto bg-gray-100">
   <header class="bg-teal-700 text-white p-6 shadow-lg">
    <div class="container mx-auto flex justify-between items-center">
     <h1 class="text-3xl font-bold">
-     LAPAKKU
+     WGPedia
     </h1>
     <nav>
      <ul class="hidden md:flex space-x-6">
@@ -66,15 +78,15 @@
      </li>
      <li>
       <a class="hover:underline" href="tentang.php">
-       Tentang
+       Tentang Kami
       </a>
      </li>
      <li>
-       <a class="hover:underline" href="lapak.php">
-        Lapak
-       </a>
-      </li>
-      <li>
+      <a class="hover:underline" href="Lapak.php">
+       Lapak
+      </a>
+     </li>
+     <li>
       <a href="login.php" class="bg-white text-teal-700 px-4 py-2 rounded hover:bg-teal-600 hover:text-white transition duration-300">
        Login
       </a>
@@ -82,48 +94,103 @@
     </ul>
    </div>
   </header>
-  <!-- About Section -->
-  <section class="py-16 bg-white">
-    <div class="container mx-auto text-center">
-     <h2 class="text-3xl font-bold text-black-600">
-      TENTANG
-     </h2>
-     <div class="flex flex-col md:flex-row items-center justify-center mt-8 space-y-8 md:space-y-0 md:space-x-8">
-      <img alt="Traditional Mentawai house" class="w-full md:w-1/3 rounded-lg shadow-lg" height="300" src="https://storage.googleapis.com/a1aa/image/ruSCtnvaw6ZWPpWdud2PsTBaCrzBBYl2tMXuLAoBMNxxbkfJA.jpg" width="400"/>
-      <div class="md:w-1/3">
-       <p class="text-lg">
-        UMKM Desa Ketanen adalah inisiatif lokal untuk mempromosikan produk-produk unggulan dari desa kami. Kami berkomitmen untuk menyediakan produk berkualitas tinggi yang dibuat dengan cinta dan dedikasi oleh masyarakat setempat.
-       </p>
-       <p class="text-lg mt-4">
-        LAPAKKU merupakan platform yang dirancang untuk memudahkan Anda menemukan informasi lengkap tentang UMKM di Desa Ketanen. Dengan Lapakku, Anda dapat mengeksplorasi kuliner terbaik dan jajanan khas di Desa Ketanen.
-       </p>
-       <!--
-      </div>
-      <img alt="Mentawai tribe member" class="w-full md:w-1/3 rounded-lg shadow-lg" height="300" src="https://storage.googleapis.com/a1aa/image/t2ZCtfCbiUxsQqBTrufzoPcPfO3ECQ77fARZ1MXWFZzU8G5PB.jpg" width="400"/>
-     </div>
-     -->
-    </div>
-   </section>
-   
-   <section class="py-16 bg-white">
-    <div class="container mx-auto text-center">
-     <div class="flex flex-col md:flex-row items-center justify-center mt-8 space-y-8 md:space-y-0 md:space-x-8">
-      <!--
-      <img alt="Traditional Mentawai house" class="w-full md:w-1/3 rounded-lg shadow-lg" height="300" src="https://storage.googleapis.com/a1aa/image/ruSCtnvaw6ZWPpWdud2PsTBaCrzBBYl2tMXuLAoBMNxxbkfJA.jpg" width="400"/>
-      -->
-      <div class="md:w-1/3">
-       <p class="text-lg">
-        UMKM Desa Ketanen adalah inisiatif lokal untuk mempromosikan produk-produk unggulan dari desa kami. Kami berkomitmen untuk menyediakan produk berkualitas tinggi yang dibuat dengan cinta dan dedikasi oleh masyarakat setempat.
-       </p>
-       <p class="text-lg mt-4">
-        LAPAKKU merupakan platform yang dirancang untuk memudahkan Anda menemukan informasi lengkap tentang UMKM di Desa Ketanen. Dengan Lapakku, Anda dapat mengeksplorasi kuliner terbaik dan jajanan khas di Desa Ketanen.
-       </p>
-      </div>
-      <img alt="Mentawai tribe member" class="w-full md:w-1/3 rounded-lg shadow-lg" height="300" src="https://storage.googleapis.com/a1aa/image/t2ZCtfCbiUxsQqBTrufzoPcPfO3ECQ77fARZ1MXWFZzU8G5PB.jpg" width="400"/>
-     </div>
-    </div>
-   </section>
+   <!-- About Us Section -->
+   <main class="container mx-auto px-4 py-8">
+        <section class="flex flex-col md:flex-row items-center mb-12">
+            <div class="md:w-1/2 md:pr-8">
+                <h2 class="text-3xl font-bold mb-4">About Us</h2>
+                <p class="text-gray-700">Wisata Gunung Pundut (WGP) merupakan tempat wisata berupa Dino Park yang populer di Gresik, Jawa Timur. Wisata Gunung Pundut mengusung konsep wisata zaman batu, sehingga wisatawan akan diajak seru-seruan menyusuri gua - yang dulunya bekas tambang kapur.</p>
+            </div>
+            <div class="md:w-1/2">
+                <img src="https://placehold.co/600x400" alt="Team photo" class="rounded-lg shadow-lg">
+            </div>
+        </section>
 
+
+
+   <!-- Our Mission -->
+   <section class="flex flex-col md:flex-row items-center mb-12">
+            <div class="md:w-1/2">
+                <img src="https://placehold.co/600x400" alt="Mission" class="rounded-lg shadow-lg">
+            </div><br />
+            <div class="md:w-1/2 md:pl-8">
+                <h2 class="text-3xl font-bold mb-4">General Information</h2>
+                <p class="text-gray-700">We believe not just in growing bigger, but in growing better. And growing better means aligning the success of your own business with the success of your customers. Win-win!</p>
+            </div>
+        </section>
+
+        <!-- Our Story -->
+        <section class="flex flex-col md:flex-row items-center mb-12">
+            <div class="md:w-1/2 md:pr-8">
+                <h2 class="text-3xl font-bold mb-4">Our History</h2>
+                <p class="text-gray-700">In 2004, fellow MIT graduate students Brian Halligan and Dharmesh Shah noticed a major shift in the way people shop and purchase products. Buyers didn't want to be interrupted by ads; they wanted helpful information.</p>
+                <p class="text-gray-700 mt-4">In 2006, they founded HubSpot to help companies use that shift to grow better with inbound marketing.</p>
+            </div>
+            <div class="md:w-1/2">
+                <img src="https://placehold.co/600x400" alt="Founders" class="rounded-lg shadow-lg">
+            </div>
+        </section>
+
+   <section class="text-center mb-12">
+    <h2 class="text-2xl font-bold mb-8">
+     Other Information
+    </h2>
+    <div class="grid md:grid-cols-3 gap-8">
+     <div class="bg-white p-6 rounded-lg shadow-lg">
+      <img alt="Globe icon" class="mx-auto mb-4 w-16" src="https://placehold.co/100x100"/>
+      <h3 class="text-xl font-bold mb-2">
+       12,000+ Pengunjung
+      </h3>
+      <a class="text-orange-600 hover:underline" href="index.php">
+       Learn more
+      </a>
+     </div>
+     <div class="bg-white p-6 rounded-lg shadow-lg">
+      <img alt="People icon" class="mx-auto mb-4 w-16" src="https://placehold.co/100x100"/>
+      <h3 class="text-xl font-bold mb-2">
+       7,600+ Lapak
+      </h3>
+      <a class="text-orange-600 hover:underline" href="lapak.php">
+       Learn more
+      </a>
+     </div>
+     <div class="bg-white p-6 rounded-lg shadow-lg">
+      <img alt="Network icon" class="mx-auto mb-4 w-16" src="https://placehold.co/100x100"/>
+      <h3 class="text-xl font-bold mb-2">
+       205,000+ Produk
+      </h3>
+      <a class="text-orange-600 hover:underline" href="produk.php">
+       Learn more
+      </a>
+     </div>
+    </div>
+   </section>
+   <!-- <section class="text-center">
+    <div class="flex justify-center space-x-4 mb-4">
+     <img alt="Award badge 1" class="rounded-lg shadow-lg w-20" src="https://placehold.co/100x100"/>
+     <img alt="Award badge 2" class="rounded-lg shadow-lg w-20" src="https://placehold.co/100x100"/>
+     <img alt="Award badge 3" class="rounded-lg shadow-lg w-20" src="https://placehold.co/100x100"/>
+     <img alt="Award badge 4" class="rounded-lg shadow-lg w-20" src="https://placehold.co/100x100"/>
+    </div>
+    <p class="text-gray-700">
+     Voted #1 in 318 categories
+    </p>
+    <a class="text-orange-600 hover:underline" href="#">
+     Learn more
+    </a>
+   </section> -->
+   
+   <script>
+   document.getElementById('menu-button').addEventListener('click', function() {
+     var menu = document.getElementById('mobile-menu');
+     if (menu.classList.contains('hidden')) {
+       menu.classList.remove('hidden');
+     } else {
+       menu.classList.add('hidden');
+     }
+   });
+  </script>
+  </main>
   <footer class="bg-teal-800 text-white py-8">
     <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
      <div class="text-center md:text-left">
@@ -223,15 +290,5 @@
      </p>
     </div>
   </footer>
-  <script>
-   document.getElementById('menu-button').addEventListener('click', function() {
-     var menu = document.getElementById('mobile-menu');
-     if (menu.classList.contains('hidden')) {
-       menu.classList.remove('hidden');
-     } else {
-       menu.classList.add('hidden');
-     }
-   });
-  </script>
  </body>
 </html>
