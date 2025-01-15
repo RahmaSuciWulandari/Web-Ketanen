@@ -357,7 +357,7 @@ input[type="submit"]:hover {
       margin-left: -70px;
   }
 
-  @keyframes fade-in-down {
+  /* @keyframes fade-in-down {
     0% { opacity: 0; transform: translateY(-20px); }
     100% { opacity: 1; transform: translateY(0); }
   }
@@ -365,7 +365,7 @@ input[type="submit"]:hover {
   .fadein {
     animation: fade-in-down 1.5s ease-in 0s 1;
     
-  }
+  } */
 
   @keyframes wobble {
     0%, 100% { transform: translateX(0%); }
@@ -377,6 +377,45 @@ input[type="submit"]:hover {
   }
 
 
-  
+/* Google Fonts */
+@import url(https://fonts.googleapis.com/css?family=Anonymous+Pro);
 
-  
+.line-1 {
+    position: relative;
+    top: 50%;
+    width: 50em; /* Pastikan lebar cukup untuk teks */
+    margin: 0 auto;
+    border-right: 2px solid rgba(255, 255, 255, 0.75);
+    font-size: 20px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    transform: translateY(-50%);
+}
+
+/* Animation */
+.anim-typewriter {
+    animation: typewriter 15s steps(124) infinite normal both;
+           /* blinkTextCursor 500ms steps(44) infinite normal; */
+}
+
+@keyframes typewriter {
+    0% {
+        width: 0;
+    }
+    50% {
+        width: 50em; /* Lebar sama seperti elemen */
+    }
+    100% {
+        width: 0;
+    }
+}
+
+@keyframes blinkTextCursor {
+    0% {
+        border-right-color: rgba(255, 255, 255, 0.75);
+    }
+    100% {
+        border-right-color: transparent;
+    }
+}

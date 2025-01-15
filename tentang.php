@@ -4,30 +4,22 @@
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title>
-   HubSpot About Us
+   Tentang
   </title>
   <script src="https://cdn.tailwindcss.com">
   </script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
-  <style>
-   body {
-       font-family: 'Open Sans', sans-serif;
-   }
-
-   .full-width-bg {
-       width: 100%;
-       margin-left: 0;
-       margin-right: 0;
-   }
-  </style>
  </head>
  <body class="font-roboto bg-gray-100">
-  <header class="bg-teal-700 text-white p-6 shadow-lg">
+  <header class="bg-teal-700 text-white p-2 shadow-lg">
    <div class="container mx-auto flex justify-between items-center">
-    <h1 class="text-3xl font-bold">
-     WGPedia
+   <div class="flex items-center space-x-4">
+   <img src="logowgp.png" alt="Logo WGPedia" class="h-16 w-auto"/> 
+   <h1 class="text-3xl font-bold">
+     WGP
     </h1>
+    </div>
     <nav>
      <ul class="hidden md:flex space-x-6">
       <li>
@@ -78,7 +70,7 @@
      </li>
      <li>
       <a class="hover:underline" href="tentang.php">
-       Tentang Kami
+       Tentang
       </a>
      </li>
      <li>

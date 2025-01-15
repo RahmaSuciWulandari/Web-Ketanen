@@ -1,3 +1,15 @@
+<?php
+include "config.php";
+
+$sql = "SELECT * FROM produk";
+$result = $koneksi->query($sql);
+
+if (!$result) {
+    die("Error in SQL query: " . $koneksi->error); // Show detailed error message
+}
+
+?>
+
 <html lang="en">
  <head>
   <meta charset="utf-8"/>
@@ -11,11 +23,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
  </head>
  <body class="font-roboto bg-gray-100">
-  <header class="bg-teal-700 text-white p-6 shadow-lg">
+  <header class="bg-teal-700 text-white p-2 shadow-lg">
    <div class="container mx-auto flex justify-between items-center">
-    <h1 class="text-3xl font-bold">
-     LAPAKKU
+   <div class="flex items-center space-x-4">
+   <img src="logowgp.png" alt="Logo WGPedia" class="h-16 w-auto"/> 
+   <h1 class="text-3xl font-bold">
+     WGP
     </h1>
+    </div>
     <nav>
      <ul class="hidden md:flex space-x-6">
       <li>
@@ -93,80 +108,32 @@
             <i class="fas fa-search"></i>
           </button>
         </div>
+
      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-      <a href="isiproduk.php" class="bg-white p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
-       <img alt="Gambar produk 1" class="w-full h-48 object-cover rounded-t-lg" height="200" src="https://storage.googleapis.com/a1aa/image/TYymQVImLS6UE1AgX9xX8LxUFYH5qVlUb1iXen0RLeqBZTenA.jpg" width="300"/>
-       <h3 class="text-2xl font-bold mt-4">
-        Produk 1
-       </h3>
-       <p class="text-gray-700 mt-2">
-        Deskripsi singkat produk 1.
-       </p>
-      </a>
-      <div class="bg-white p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
-       <img alt="Gambar produk 2" class="w-full h-48 object-cover rounded-t-lg" height="200" src="https://storage.googleapis.com/a1aa/image/vLHpXh8UnNJBBNxBEJdJiRongJYx4ydOeKGKReVyHZA9YTenA.jpg" width="300"/>
-       <h3 class="text-2xl font-bold mt-4">
-        Produk 2
-       </h3>
-       <p class="text-gray-700 mt-2">
-        Deskripsi singkat produk 2.
-       </p>
+     <?php
+          $sql = "SELECT produk.id_produk, produk.nama_produk, produk.deskripsi, MIN(produk_gambar.file_path) AS file_path 
+                  FROM produk 
+                  LEFT JOIN produk_gambar ON produk.id_produk = produk_gambar.id_produk 
+                  GROUP BY produk.id_produk 
+                  LIMIT 3";
+
+          $result = $koneksi->query($sql);
+
+          if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+              $gambar = $row['file_path'] ?: 'default.jpg'; // Gunakan gambar default jika file_path NULL
+              echo '<div class="bg-white p-4 rounded-lg shadow-lg ">';
+              echo '<img src="' . $gambar . '" alt="' . htmlspecialchars($row['nama_produk']) . '" class="w-full h-48 object-cover mb-4 rounded">';
+              echo '<h3 class="text-lg font-bold">' . htmlspecialchars($row['nama_produk']) . '</h3>';
+              echo '<p class="text-gray-600">' . htmlspecialchars($row['deskripsi']) . '</p>';
+              echo '</div>';
+            }
+          } else {
+            echo "<p>Tidak ada produk yang ditemukan.</p>";
+          }
+        ?>
+
       </div>
-      <div class="bg-white p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
-       <img alt="Gambar produk 3" class="w-full h-48 object-cover rounded-t-lg" height="200" src="https://storage.googleapis.com/a1aa/image/EYHeqmZHqpQaCCnBN6G5zherYgZ8DovCv9iHdBoyglU7YTenA.jpg" width="300"/>
-       <h3 class="text-2xl font-bold mt-4">
-        Produk 3
-       </h3>
-       <p class="text-gray-700 mt-2">
-        Deskripsi singkat produk 3.
-       </p>
-      </div>
-      <div class="bg-white p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
-        <img alt="Gambar produk 3" class="w-full h-48 object-cover rounded-t-lg" height="200" src="https://storage.googleapis.com/a1aa/image/EYHeqmZHqpQaCCnBN6G5zherYgZ8DovCv9iHdBoyglU7YTenA.jpg" width="300"/>
-        <h3 class="text-2xl font-bold mt-4">
-         Produk 3
-        </h3>
-        <p class="text-gray-700 mt-2">
-         Deskripsi singkat produk 3.
-        </p>
-       </div>
-       <div class="bg-white p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
-        <img alt="Gambar produk 3" class="w-full h-48 object-cover rounded-t-lg" height="200" src="https://storage.googleapis.com/a1aa/image/EYHeqmZHqpQaCCnBN6G5zherYgZ8DovCv9iHdBoyglU7YTenA.jpg" width="300"/>
-        <h3 class="text-2xl font-bold mt-4">
-         Produk 3
-        </h3>
-        <p class="text-gray-700 mt-2">
-         Deskripsi singkat produk 3.
-        </p>
-       </div>
-       <div class="bg-white p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
-        <img alt="Gambar produk 3" class="w-full h-48 object-cover rounded-t-lg" height="200" src="https://storage.googleapis.com/a1aa/image/EYHeqmZHqpQaCCnBN6G5zherYgZ8DovCv9iHdBoyglU7YTenA.jpg" width="300"/>
-        <h3 class="text-2xl font-bold mt-4">
-         Produk 3
-        </h3>
-        <p class="text-gray-700 mt-2">
-         Deskripsi singkat produk 3.
-        </p>
-       </div>
-       <div class="bg-white p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
-        <img alt="Gambar produk 3" class="w-full h-48 object-cover rounded-t-lg" height="200" src="https://storage.googleapis.com/a1aa/image/EYHeqmZHqpQaCCnBN6G5zherYgZ8DovCv9iHdBoyglU7YTenA.jpg" width="300"/>
-        <h3 class="text-2xl font-bold mt-4">
-         Produk 3
-        </h3>
-        <p class="text-gray-700 mt-2">
-         Deskripsi singkat produk 3.
-        </p>
-       </div>
-       <div class="bg-white p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
-        <img alt="Gambar produk 3" class="w-full h-48 object-cover rounded-t-lg" height="200" src="https://storage.googleapis.com/a1aa/image/EYHeqmZHqpQaCCnBN6G5zherYgZ8DovCv9iHdBoyglU7YTenA.jpg" width="300"/>
-        <h3 class="text-2xl font-bold mt-4">
-         Produk 3
-        </h3>
-        <p class="text-gray-700 mt-2">
-         Deskripsi singkat produk 3.
-        </p>
-       </div>
-     </div>
   
     </div>
  </section>
@@ -282,3 +249,7 @@
   </script>
  </body>
 </html>
+
+<?php
+$koneksi->close();
+?>
