@@ -2,65 +2,84 @@
 include "config.php";
 session_start();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['jumlah_produk'])) {
-        $jumlah_produk = intval($_POST['jumlah_produk']);
-    } elseif (isset($_POST['submit_produk'])) {
-        // Handle the submitted product data
-        $id_lapak = trim($_POST['id_lapak']);
-        $produk = $_POST['produk'];
-        $files = $_FILES['produk'];
-
-        foreach ($produk as $index => $item) {
-            $nama_produk = $item['nama'];
-            $kategori = $item['kategori'];
-            $deskripsi = $item['deskripsi'];
-            $keunggulan = json_encode($item['keunggulan']);
-            $harga = $item['harga'];
-
-            // Insert product into database and get the generated ID
-            $sql = "INSERT INTO produk (id_lapak, nama_produk, kategori_produk, deskripsi, keunggulan, harga) 
-                    VALUES (?, ?, ?, ?, ?, ?)";
-            $stmt = $koneksi->prepare($sql);
-            $stmt->bind_param("ssssss", $id_lapak, $nama_produk, $kategori, $deskripsi, $keunggulan, $harga);
-
-            if ($stmt->execute()) {
-                $id_produk = $stmt->insert_id; // Get the product ID
-
-                // Handle multiple image uploads
-                if (isset($files['name'][$index]['gambar']) && is_array($files['name'][$index]['gambar'])) {
-                    $upload_dir = "uploads/"; // Directory to save images
-
-                    foreach ($files['name'][$index]['gambar'] as $file_index => $file_name) {
-                        $image_name = basename($file_name);
-                        $target_file = $upload_dir . $image_name;
-
-                        if (move_uploaded_file($files['tmp_name'][$index]['gambar'][$file_index], $target_file)) {
-                            
-                            $sql_image = "INSERT INTO produk_gambar (id_produk, file_path) VALUES (?, ?)";
-                            $stmt_image = $koneksi->prepare($sql_image);
-                            $stmt_image->bind_param("is", $id_produk, $target_file);
-
-                            if (!$stmt_image->execute()) {
-                                echo "Error saving image: " . $stmt_image->error;
-                                exit();
-                            }
-                        } else {
-                            echo "Error uploading image: $file_name";
-                            exit();
-                        }
-                    }
-                }
-            } else {
-                echo "Error: " . $stmt->error;
-                exit();
-            }
-        }
-
-        header("Location: tambah_lapak.php");
-        exit();
-    }
+if (isset($_GET['id_lapak']) && !empty($_GET['id_lapak'])) {
+  $id_lapak = $_GET['id_lapak'];
+  $_SESSION['id_lapak'] = $id_lapak; // Simpan ke session untuk penggunaan selanjutnya
+} elseif (isset($_SESSION['id_lapak']) && !empty($_SESSION['id_lapak'])) {
+  $id_lapak = $_SESSION['id_lapak'];
+} else {
+  // Redirect ke halaman lapak jika ID tidak ditemukan
+  header("Location: adminlapak.php");
+  exit();
 }
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  if (isset($_POST['jumlah_produk'])) {
+      $jumlah_produk = intval($_POST['jumlah_produk']);
+  } elseif (isset($_POST['submit_produk'])) {
+      // Handle the submitted product data
+      $id_lapak = trim($_POST['id_lapak']);
+      $produk = $_POST['produk'];
+      $files = $_FILES['produk'];
+
+      foreach ($produk as $index => $item) {
+          $nama_produk = $item['nama'];
+          $kategori = $item['kategori'];
+          $deskripsi = $item['deskripsi'];
+          $keunggulan = json_encode($item['keunggulan']);
+          $harga = $item['harga'];
+
+          // Insert product into database and get the generated ID
+          $sql = "INSERT INTO produk (id_lapak, nama_produk, kategori_produk, deskripsi, keunggulan, harga) 
+                  VALUES (?, ?, ?, ?, ?, ?)";
+          $stmt = $koneksi->prepare($sql);
+          $stmt->bind_param("isssss", $id_lapak, $nama_produk, $kategori, $deskripsi, $keunggulan, $harga);
+
+          if ($stmt->execute()) {
+              $id_produk = $stmt->insert_id; // Get the product ID
+
+              // Handle multiple image uploads
+              if (isset($files['name'][$index]['gambar']) && is_array($files['name'][$index]['gambar'])) {
+                  $upload_dir = "uploads/"; // Directory to save images
+
+                  foreach ($files['name'][$index]['gambar'] as $file_index => $file_name) {
+                      $image_name = basename($file_name); // Get the image name without path
+                      $target_file = $upload_dir . $image_name; // Define the target file path
+
+                      // Check if file already exists, and if it does, modify the file name
+                      if (file_exists($target_file)) {
+                          $image_name = pathinfo($file_name, PATHINFO_FILENAME) . '_' . uniqid() . '.' . pathinfo($file_name, PATHINFO_EXTENSION);
+                          $target_file = $upload_dir . $image_name; // Update the target file path with the new name
+                      }
+
+                      // Upload the file
+                      if (move_uploaded_file($files['tmp_name'][$index]['gambar'][$file_index], $target_file)) {
+                          // Insert image path into the database
+                          $sql_image = "INSERT INTO produk_gambar (id_produk, file_path) VALUES (?, ?)";
+                          $stmt_image = $koneksi->prepare($sql_image);
+                          $stmt_image->bind_param("is", $id_produk, $target_file);
+
+                          if (!$stmt_image->execute()) {
+                              echo "Error saving image: " . $stmt_image->error;
+                              exit();
+                          }
+                      } else {
+                          echo "Error uploading image: $file_name";
+                          exit();
+                      }
+                  }
+              }
+          } else {
+              echo "Error: " . $stmt->error;
+              exit();
+          }
+      }
+
+      header("Location: adminlapak.php");
+      exit();
+  }
+}
+
 ?>
 
 <html lang="en">
@@ -163,7 +182,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           </div>
         </form>
         <form method="POST" action="" enctype="multipart/form-data">
-          <input type="hidden" name="id_lapak" value="1">
+          <input type="hidden" name="id_lapak" value="<?php echo $id_lapak; ?>">
           <div id="produk-forms"></div>
           <button type="submit" name="submit_produk" class="bg-teal-500 text-white px-4 py-2 rounded-md">Simpan Produk</button>
         </form>

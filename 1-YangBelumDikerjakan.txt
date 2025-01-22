@@ -1,0 +1,11 @@
+1. User
+-Produk(belum sesuai database, bagian dalamnya belum diedit dan belum dihubungkan)(icon tata letak, ds)
+-Tentang(Belum diedit)
+-Lapak(Gambar lapak gak muncul, bagian dalamnya belum diedit dan belum dihubungkan)
+
+
+2. Admin
+-Lapak(belum sesuai tambah lapaknya, editnya juga)
+-Logout(ada halaman admin yang masih belum disesuaikan semua)
+-cekproduk(editnya belum disesuaikan)
+-tambahproduk(ada halaman admin yang masih belum disesuaikan semua)

@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Verifikasi password
             if (password_verify($password, $data['password'])) {
                 $_SESSION["username"] = $data["username"];
-                header("location: admin.php");
+                header("location: admin2.php");
                 exit();
             } else {
                 $login_message = "Password salah.";

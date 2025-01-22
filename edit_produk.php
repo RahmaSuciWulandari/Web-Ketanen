@@ -23,8 +23,16 @@ if (!$produk) {
     exit();
 }
 
+// Ambil data gambar terkait produk
+$sql_gambar = "SELECT * FROM produk_gambar WHERE id_produk = ?";
+$stmt_gambar = $koneksi->prepare($sql_gambar);
+$stmt_gambar->bind_param("i", $id_produk);
+$stmt_gambar->execute();
+$gambar_rows = $stmt_gambar->get_result()->fetch_all(MYSQLI_ASSOC);
+
 // Proses update data
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Update data produk
     $nama_produk = $_POST['nama_produk'];
     $harga = $_POST['harga'];
     $deskripsi = $_POST['deskripsi'];
@@ -34,10 +42,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("sdsi", $nama_produk, $harga, $deskripsi, $id_produk);
 
     if ($stmt->execute()) {
-        header("Location: cekproduk.php?id=" . $produk['id_lapak']);
+        // Proses upload gambar baru
+        if (isset($_FILES['gambar']['name']) && count($_FILES['gambar']['name']) > 0) {
+            $target_dir = "uploads/";
+
+            foreach ($_FILES['gambar']['name'] as $index => $filename) {
+                if ($_FILES['gambar']['error'][$index] == 0) {
+                    $imageFileType = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+                    $unique_file_name = pathinfo($filename, PATHINFO_FILENAME) . "_" . time() . "_" . $index . "." . $imageFileType;
+                    $target_file = $target_dir . $unique_file_name;
+
+                    if (move_uploaded_file($_FILES['gambar']['tmp_name'][$index], $target_file)) {
+                        $sql_insert_gambar = "INSERT INTO produk_gambar (id_produk, file_path, uploaded_at) VALUES (?, ?, NOW())";
+                        $stmt_insert_gambar = $koneksi->prepare($sql_insert_gambar);
+                        $stmt_insert_gambar->bind_param("is", $id_produk, $unique_file_name);
+                        $stmt_insert_gambar->execute();
+                    }
+                }
+            }
+        }
+
+        header("Location: edit_produk.php?id=" . $id_produk);
         exit();
     } else {
         echo "Gagal memperbarui data.";
+    }
+}
+
+// Proses hapus gambar
+if (isset($_GET['delete_gambar_id'])) {
+    $id_gambar = $_GET['delete_gambar_id'];
+
+    // Ambil file_path dari database
+    $sql_hapus_gambar = "SELECT file_path FROM produk_gambar WHERE id_gambar = ?";
+    $stmt_hapus_gambar = $koneksi->prepare($sql_hapus_gambar);
+    $stmt_hapus_gambar->bind_param("i", $id_gambar);
+    $stmt_hapus_gambar->execute();
+    $result_hapus = $stmt_hapus_gambar->get_result()->fetch_assoc();
+
+    if ($result_hapus) {
+        $file_path = "uploads/" . $result_hapus['file_path'];
+
+        // Hapus file dari folder
+        if (file_exists($file_path)) {
+            unlink($file_path);
+        }
+
+        // Hapus data dari database
+        $sql_delete_gambar = "DELETE FROM produk_gambar WHERE id_gambar = ?";
+        $stmt_delete_gambar = $koneksi->prepare($sql_delete_gambar);
+        $stmt_delete_gambar->bind_param("i", $id_gambar);
+        $stmt_delete_gambar->execute();
+
+        header("Location: edit_produk.php?id=" . $id_produk);
+        exit();
     }
 }
 ?>
@@ -53,10 +111,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body class="bg-gray-100 font-sans">
-    <div class="flex h-screen items-center justify-center">
-        <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
+    <div class="flex h-screen items-center justify-center px-4 mt-6 mb-6">
+        <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-4xl overflow-auto max-h-screen">
             <h1 class="text-2xl font-semibold mb-4">Edit Produk</h1>
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
+                <!-- Form Data Produk -->
                 <div class="mb-4">
                     <label class="block text-gray-700 mb-2">Nama Produk</label>
                     <input type="text" name="nama_produk" value="<?php echo $produk['nama_produk']; ?>" class="w-full p-2 border rounded-md" required>
@@ -69,6 +128,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label class="block text-gray-700 mb-2">Deskripsi</label>
                     <textarea name="deskripsi" class="w-full p-2 border rounded-md" required><?php echo $produk['deskripsi']; ?></textarea>
                 </div>
+
+                <!-- Form Gambar Produk -->
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2">Gambar Produk</label>
+                    <?php if (!empty($gambar_rows)) { ?>
+                        <?php foreach ($gambar_rows as $gambar) { ?>
+                            <div class="mb-2">
+                                <img src="<?php echo $gambar['file_path']; ?>" alt="Gambar Produk" class="w-24 h-24 object-cover rounded-md shadow">
+                                <a href="edit_produk.php?id=<?php echo $id_produk; ?>&delete_gambar_id=<?php echo $gambar['id_gambar']; ?>" class="text-red-500 text-sm">Hapus Gambar</a>
+                            </div>
+                        <?php } ?>
+                    <?php } ?>
+                    <input type="file" name="gambar[]" multiple class="w-full p-2 border rounded-md">
+                </div>
+
+                <!-- Submit Button -->
                 <div class="flex justify-between items-center">
                     <button type="submit" class="bg-teal-500 text-white px-4 py-2 rounded-md">Simpan</button>
                     <a href="cekproduk.php?id=<?php echo $produk['id_lapak']; ?>" class="text-teal-500">Kembali</a>

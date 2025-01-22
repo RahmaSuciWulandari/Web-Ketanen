@@ -8,12 +8,11 @@ include "config.php";
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title>Wisata Gunung Pundhut(WGP)</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Tambahkan Font Awesome untuk ikon hamburger -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700-xampp;display=swap" rel="stylesheet"/>
 </head>
 <body class="font-roboto bg-gray-100">
-  <header class="bg-teal-700 text-white p-6 shadow-lg">
+<header class="bg-teal-700 text-white p-6 shadow-lg">
     <div class="container mx-auto flex justify-between items-center">
       <div class="flex items-center">
         <img src="logowgp.png" alt="Logo WGPedia" class="h-10 w-10 mr-2"/>
@@ -76,7 +75,7 @@ include "config.php";
             Wisata Gunung Pundut (WGP) merupakan tempat wisata berupa Dino Park yang populer di Gresik, Jawa Timur. Wisata Gunung Pundut mengusung konsep wisata zaman batu, sehingga wisatawan akan diajak seru-seruan menyusuri gua - yang dulunya bekas tambang kapur.
           </p>
           <p class="text-lg mt-4 text-black">
-            WGPedia merupakan platform yang dirancang untuk memudahkan Anda menemukan informasi lengkap tentang Wisata dan UMKM di Desa Ketanen. Dengan WGPedia, Anda dapat mengeksplorasi keindahan dan potensi yang ada di Desa Ketanen.
+            WGP merupakan platform yang dirancang untuk memudahkan Anda menemukan informasi lengkap tentang Wisata dan UMKM di Desa Ketanen. Dengan WGPedia, Anda dapat mengeksplorasi keindahan dan potensi yang ada di Desa Ketanen.
           </p>
           <a href="tentang.php" class="inline-block mt-4 bg-teal-600 text-white px-4 py-2 rounded">Lihat selengkapnya &gt;</a>
         </div>
@@ -90,28 +89,29 @@ include "config.php";
     <div class="container mx-auto text-center">
       <h2 class="text-3xl font-bold mb-6">Produk Kami</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-        <?php
-          $sql = "SELECT produk.id_produk, produk.nama_produk, produk.deskripsi, MIN(produk_gambar.file_path) AS file_path 
-                  FROM produk 
-                  LEFT JOIN produk_gambar ON produk.id_produk = produk_gambar.id_produk 
-                  GROUP BY produk.id_produk 
-                  LIMIT 3";
+      <?php
+  $sql = "SELECT produk.id_produk, produk.nama_produk, produk.kategori_produk, MIN(produk_gambar.file_path) AS file_path 
+          FROM produk 
+          LEFT JOIN produk_gambar ON produk.id_produk = produk_gambar.id_produk 
+          GROUP BY produk.id_produk 
+          LIMIT 3";
 
-          $result = $koneksi->query($sql);
+  $result = $koneksi->query($sql);
 
-          if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-              $gambar = $row['file_path'] ?: 'default.jpg'; // Gunakan gambar default jika file_path NULL
-              echo '<div class="bg-white p-4 rounded-lg shadow-lg ">';
-              echo '<img src="' . $gambar . '" alt="' . htmlspecialchars($row['nama_produk']) . '" class="w-full h-48 object-cover mb-4 rounded">';
-              echo '<h3 class="text-lg font-bold">' . htmlspecialchars($row['nama_produk']) . '</h3>';
-              echo '<p class="text-gray-600">' . htmlspecialchars($row['deskripsi']) . '</p>';
-              echo '</div>';
-            }
-          } else {
-            echo "<p>Tidak ada produk yang ditemukan.</p>";
-          }
-        ?>
+  if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+      $gambar = $row['file_path'] ?: 'default.jpg'; // Gunakan gambar default jika file_path NULL
+      echo '<a href="isiproduk.php?id_produk=' . $row['id_produk'] . '" class="block bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition duration-300">';
+      echo '<img src="' . $gambar . '" alt="' . htmlspecialchars($row['nama_produk']) . '" class="w-full h-48 object-cover mb-4 rounded">';
+      echo '<h3 class="text-lg font-bold">' . htmlspecialchars($row['nama_produk']) . '</h3>';
+      echo '<p class="text-gray-600">' . htmlspecialchars($row['kategori_produk']) . '</p>';
+      echo '</a>';
+    }
+  } else {
+    echo "<p>Tidak ada produk yang ditemukan.</p>";
+  }
+?>
+
       </div>
       <div class="flex justify-center mt-8">
         <a href="produk.php" class="inline-block bg-teal-600 text-white px-4 py-2 rounded">Lihat selengkapnya &gt;</a>
@@ -122,7 +122,7 @@ include "config.php";
   <footer class="bg-teal-800 text-white py-8">
     <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
       <div class="text-center md:text-left">
-        <h3 class="text-2xl font-bold">WGPedia</h3>
+        <h3 class="text-2xl font-bold">WGP</h3>
         <div class="flex space-x-4 mt-4">
           <a href="#"><i class="fab fa-facebook-f"></i></a>
           <a href="#"><i class="fab fa-twitter"></i></a>
@@ -133,19 +133,13 @@ include "config.php";
       <div class="text-center md:text-left mt-8 md:mt-0">
         <h4 class="font-bold">SITEMAP</h4>
         <ul class="mt-4 space-y-2">
-          <li><a href="#">HOME</a></li>
-          <li><a href="#">PRODUK</a></li>
-          <li><a href="#">TENTANG KAMI</a></li>
+          <li><a href="index.php">HOME</a></li>
+          <li><a href="produk.php">PRODUK</a></li>
+          <li><a href="lapak.php">LAPAK</a></li>
+          <li><a href="tentang.php">TENTANG KAMI</a></li>
         </ul>
       </div>
-      <div class="text-center md:text-left mt-8 md:mt-0">
-        <h4 class="font-bold">QUICK LINKS</h4>
-        <ul class="mt-4 space-y-2">
-          <li><a href="#">Tentang</a></li>
-          <li><a href="#">Artikel</a></li>
-          <li><a href="#">Blog</a></li>
-        </ul>
-      </div>
+      
       <div class="text-center md:text-left mt-8 md:mt-0">
         <h4 class="font-bold">Let's Talk</h4>
         <ul class="mt-4 space-y-2">
@@ -156,7 +150,7 @@ include "config.php";
       </div>
     </div>
     <div class="text-center mt-8">
-      <p>© Copyright 2024 WGPedia. All Rights Reserved Design By <a class="text-teal-300" href="#">KKNUQDesaKetanen</a></p>
+      <p>© Copyright 2024 WGP. All Rights Reserved Design By <a class="text-teal-300" href="#">KKNUQDesaKetanen</a></p>
     </div>
   </footer>
 
