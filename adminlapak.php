@@ -53,41 +53,34 @@ $pages = ceil($total / $limit);
 <body class="bg-gray-100 font-sans">
     <div class="flex h-screen">
         <!-- Sidebar -->
-   <div class="w-64 bg-white shadow-md">
+        <div class="w-64 bg-white shadow-md fixed h-full">
     <div class="p-6">
-     <h1 class="text-2xl font-bold text-teal-600 mb-6">WGPedia</h1>
-     <nav class="space-y-2">
-  <a href="admin2.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
-    <i class="fas fa-tachometer-alt mr-3"></i>
-    <span>Dashboard</span>
-  </a>
-  <a href="adminlapak.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
-    <i class="fas fa-map-marker-alt mr-3"></i>
-    <span>Lapak</span>
-  </a>
-  <!-- <a href="admintentang.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
-    <i class="fas fa-newspaper mr-3"></i>
-    <span>Tentang</span>
-  </a> -->
-</nav>
-
+        <h1 class="text-2xl font-bold text-teal-600 mb-6">WGPedia</h1>
+        <nav class="space-y-2">
+            <a href="admin2.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
+                <i class="fas fa-tachometer-alt mr-3"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="adminlapak.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
+                <i class="fas fa-map-marker-alt mr-3"></i>
+                <span>Lapak</span>
+            </a>
+        </nav>
     </div>
     <div class="absolute bottom-0 p-6">
-    <div class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md w-58">
-    <i class="fas fa-sign-out-alt mr-3"></i>
-    <form action="" method="post">
-        <input type="submit" name="logout" value="Logout" class="bg-transparent text-gray-600 hover:text-gray-900 cursor-pointer">
-    </form>
+        <div class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md w-58">
+            <i class="fas fa-sign-out-alt mr-3"></i>
+            <form action="" method="post">
+                <input type="submit" name="logout" value="Logout" class="bg-transparent text-gray-600 hover:text-gray-900 cursor-pointer">
+            </form>
+        </div>
+        <p class="text-gray-400 text-sm mt-6">© KKNUQDesaKetanen</p>
+    </div>
 </div>
 
-     <p class="text-gray-400 text-sm mt-6">
-      © KKNUQDesaKetanen
-     </p>
-    </div>
-   </div>
 
         <!-- Main Content -->
-        <div class="flex-1 p-6">
+        <div class="flex-1 p-6 ml-64">
         <div class="bg-white p-6 rounded-lg shadow-md">
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-semibold">Daftar Lapak</h1>
@@ -119,7 +112,8 @@ $pages = ceil($total / $limit);
                                     <td class="py-2 px-4 border-b text-gray-600"><?php echo $row['alamat']; ?></td>
                                     <!-- Produk -->
                                     <td class="py-2 px-4 border-b text-teal-500">
-                                        <a href="cekproduk.php?id=<?php echo $row['id_lapak']; ?>" class="bg-teal-500 text-white px-4 py-2 rounded-md"">Cek Produk</a>
+                                        <a href="cekproduk.php?id=<?php echo $row['id_lapak']; ?>">Cek Produk</a>
+                                        
                                     </td>
                                     <!-- Action -->
                                     <td class="py-2 px-4 border-b">

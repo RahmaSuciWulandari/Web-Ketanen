@@ -44,17 +44,17 @@ if (isset($_POST['logout'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cek Produk - <?php echo $lapak['nama_lapak']; ?></title>
+    <title>Cek Produk - <?php echo htmlspecialchars($lapak['nama_lapak']); ?></title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </head>
 
 <body class="bg-gray-100 font-sans">
-    <div class="flex h-screen">
-        <!-- Sidebar -->
-        <div class="w-64 bg-white shadow-md">
+    <div class="flex">
+        <!-- Sidebar Fixed -->
+        <div class="w-64 bg-white shadow-md fixed h-screen overflow-y-auto">
             <div class="p-6">
-                <h1 class="text-2xl font-bold text-teal-600 mb-6">WGPedia</h1>
+                <h1 class="text-2xl font-bold text-teal-600 mb-6">WGP</h1>
                 <nav class="space-y-2">
                     <a href="admin2.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
                         <i class="fas fa-tachometer-alt mr-3"></i>
@@ -67,20 +67,20 @@ if (isset($_POST['logout'])) {
                 </nav>
             </div>
             <div class="absolute bottom-0 p-6">
-                <div class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md w-58">
+                <form action="" method="post" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
                     <i class="fas fa-sign-out-alt mr-3"></i>
-                    <form action="" method="post">
-                        <input type="submit" name="logout" value="Logout" class="bg-transparent text-gray-600 hover:text-gray-900 cursor-pointer">
-                    </form>
-                </div>
+                    <button type="submit" name="logout" class="bg-transparent text-gray-600 hover:text-gray-900 cursor-pointer">
+                        Logout
+                    </button>
+                </form>
                 <p class="text-gray-400 text-sm mt-6">© KKNUQDesaKetanen</p>
             </div>
         </div>
 
         <!-- Main Content -->
-        <div class="flex-1 p-6">
+        <div class="flex-1 p-6 ml-64 overflow-y-auto">
             <div class="bg-white p-6 rounded-lg shadow-md">
-                <h1 class="text-2xl font-semibold mb-6">Produk dari Lapak: <?php echo $lapak['nama_lapak']; ?></h1>
+                <h1 class="text-2xl font-semibold mb-6">Produk dari Lapak: <?php echo htmlspecialchars($lapak['nama_lapak']); ?></h1>
 
                 <!-- Tombol Tambah Produk -->
                 <div class="mb-4">
@@ -105,9 +105,9 @@ if (isset($_POST['logout'])) {
                             while ($row = $result_produk->fetch_assoc()): ?>
                                 <tr class="hover:bg-gray-50">
                                     <td class="py-2 px-4 border-b font-medium text-gray-800"><?php echo $no++; ?></td>
-                                    <td class="py-2 px-4 border-b font-medium text-gray-800"><?php echo $row['nama_produk']; ?></td>
+                                    <td class="py-2 px-4 border-b font-medium text-gray-800"><?php echo htmlspecialchars($row['nama_produk']); ?></td>
                                     <td class="py-2 px-4 border-b text-gray-600"><?php echo "Rp " . number_format($row['harga'], 0, ',', '.'); ?></td>
-                                    <td class="py-2 px-4 border-b text-gray-600"><?php echo $row['deskripsi']; ?></td>
+                                    <td class="py-2 px-4 border-b text-gray-600"><?php echo htmlspecialchars($row['deskripsi']); ?></td>
                                     <td class="py-2 px-4 border-b">
                                         <div class="flex space-x-2">
                                             <a href="edit_produk.php?id=<?php echo $row['id_produk']; ?>" class="text-yellow-500 hover:text-yellow-600">

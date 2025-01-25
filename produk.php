@@ -41,7 +41,7 @@ $result = $stmt->get_result();
    <div class="flex items-center space-x-1">
    <img src="logowgp.png" alt="Logo WGPedia" class="h-16 w-auto"/> 
    <h1 class="text-3xl font-bold">
-     WGP
+   <a href="index.php">WGP</a>
     </h1>
     </div>
     <nav>
@@ -153,11 +153,12 @@ $result = $stmt->get_result();
       <div class="text-center md:text-left">
         <h3 class="text-2xl font-bold">WGP</h3>
         <div class="flex space-x-4 mt-4">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-linkedin-in"></i></a>
-        </div>
+  <a href="#"><i class="fas fa-envelope"></i></a>
+  <a href="https://www.instagram.com/wgp_dinopark?igsh=eHhkbXhqZW5kNG13"><i class="fab fa-instagram"></i></a>
+  <a href="#"><i class="fab fa-tiktok"></i></a>
+  <a href="#"><i class="fab fa-youtube"></i></a>
+</div>
+
       </div>
       <div class="text-center md:text-left mt-8 md:mt-0">
         <h4 class="font-bold">SITEMAP</h4>
@@ -179,7 +180,7 @@ $result = $stmt->get_result();
       </div>
     </div>
     <div class="text-center mt-8">
-      <p>© Copyright 2024 WGP. All Rights Reserved Design By <a class="text-teal-300" href="#">KKNUQDesaKetanen</a></p>
+      <p>© Copyright 2024 WGP. All Rights Reserved Design By <a class="text-teal-300" href="https://www.instagram.com/kknuq_ketanen2025?igsh=MXR3OTJrcnlmcnh4bA==">KKNUQDesaKetanen</a></p>
     </div>
   </footer>
   <script>

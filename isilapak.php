@@ -74,7 +74,7 @@ if (isset($_GET['id_lapak'])) {
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
     <!-- Informasi Lapak -->
     <div>
-        <h2 class="text-2xl font-bold mb-4 text-teal-700">Informasi Lapak</h2>
+        <h2 class="text-2xl font-bold mb-4 text-black-700">Informasi Lapak</h2>
         <p class="text-gray-700 leading-relaxed"><?php echo htmlspecialchars($lapak_data['deskripsi']); ?></p>
     </div>
     <!-- Gambar Lapak -->
@@ -89,7 +89,7 @@ if (isset($_GET['id_lapak'])) {
 
 <!-- Produk Section -->
 <div class="mt-10">
-    <h2 class="text-2xl font-bold mb-6 text-teal-700">Produk Lapak</h2>
+    <h2 class="text-2xl font-bold mb-6 text-black-700">Produk Lapak</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <?php
         if ($result_produk->num_rows > 0) {

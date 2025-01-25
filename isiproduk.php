@@ -36,6 +36,25 @@ if (isset($_GET['id_produk'])) {
 } else {
     die("ID Produk tidak ditemukan.");
 }
+
+// Query untuk mengambil keunggulan produk
+$sql_produk = "SELECT keunggulan FROM produk WHERE id_produk = ?";
+$stmt_produk = $koneksi->prepare($sql_produk);
+$stmt_produk->bind_param("i", $id_produk);
+$stmt_produk->execute();
+$result_produk = $stmt_produk->get_result();
+
+// Ambil hasil query
+$row_produk = $result_produk->fetch_assoc();
+$keunggulan_produk = json_decode($row_produk['keunggulan'], true); // Decode JSON ke array
+
+// Peta ikon untuk setiap keunggulan
+$icon_map = [
+    "Sertifikasi Halal" => "images/halal.png",
+    "Great Quality" => "images/higenis.png",
+    "Best Seller" => "images/bs.png",
+    "Affordable Price" => "images/murah.png"
+];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +65,6 @@ if (isset($_GET['id_produk'])) {
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
-    
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -66,7 +84,6 @@ if (isset($_GET['id_produk'])) {
             <div>
                 <h2 class="text-2xl font-semibold text-gray-700 mb-4">Tentang Produk</h2>
                 <p class="text-gray-600 leading-relaxed mb-4"> <?php echo htmlspecialchars($produk['deskripsi']); ?></p>
-                <a href="https://wa.me/<?php echo htmlspecialchars($produk['kontak']); ?>?text=Halo,%20saya%20ingin%20memesan Produk UMKM Desa Ketanen <sebutkan produk>" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium shadow-md inline-block mt-4">Beli Produk</a>
             </div>
             <!-- Image Section -->
             <div class="grid grid-cols-1 gap-4">
@@ -75,41 +92,28 @@ if (isset($_GET['id_produk'])) {
         </div>
         <!-- Facilities Section -->
         <div class="mt-12">
-            <h2 class="text-2xl font-semibold text-gray-700 mb-6">Keunggulan Produk</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <!-- Sertifikasi Halal -->
+    <?php if (!empty($keunggulan_produk)): ?>
+        <h2 class="text-2xl font-semibold text-gray-700 mb-6">Keunggulan Produk</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <?php foreach ($keunggulan_produk as $keunggulan): ?>
                 <div class="flex flex-col items-center bg-gray-50 shadow-md rounded-lg p-4">
                     <div class="bg-green-100 rounded-full w-20 h-20 flex items-center justify-center mb-4">
-                        <img src="halal.png" alt="Sertifikasi Halal" class="w-12 h-12 object-contain" />
+                        <?php
+                            // Validasi apakah ikon ada di folder dan tampilkan fallback jika tidak ada
+                            $icon_path = isset($icon_map[$keunggulan]) && file_exists($icon_map[$keunggulan]) ? $icon_map[$keunggulan] : 'images/default.png';
+                        ?>
+                        <img src="<?php echo $icon_path; ?>" alt="<?php echo htmlspecialchars($keunggulan); ?>" class="w-12 h-12 object-contain" />
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-700">Sertifikasi Halal</h3>
+                    <h3 class="text-lg font-semibold text-gray-700"><?php echo htmlspecialchars($keunggulan); ?></h3>
                 </div>
-
-                <!-- Higenis -->
-                <div class="flex flex-col items-center bg-gray-50 shadow-md rounded-lg p-4">
-                    <div class="bg-green-100 rounded-full w-20 h-20 flex items-center justify-center mb-4">
-                        <img src="higenis.png" alt="Higenis" class="w-12 h-12 object-contain" />
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-700">Higenis</h3>
-                </div>
-
-                <!-- Best Seller -->
-                <div class="flex flex-col items-center bg-gray-50 shadow-md rounded-lg p-4">
-                    <div class="bg-green-100 rounded-full w-20 h-20 flex items-center justify-center mb-4">
-                        <img src="bs.png" alt="Best Seller" class="w-12 h-12 object-contain" />
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-700">Best Seller</h3>
-                </div>
-
-                <!-- Affordable Price -->
-                <div class="flex flex-col items-center bg-gray-50 shadow-md rounded-lg p-4">
-                    <div class="bg-green-100 rounded-full w-20 h-20 flex items-center justify-center mb-4">
-                        <img src="murah.png" alt="Affordable Price" class="w-12 h-12 object-contain" />
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-700">Harga Terjangkau</h3>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
+    <?php endif; ?>
+</div>
+<div>
+<a href="https://wa.me/<?php echo htmlspecialchars($produk['kontak']); ?>?text=Halo,%20saya%20ingin%20memesan Produk UMKM Desa Ketanen <sebutkan produk>" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium shadow-md inline-block mt-4">Beli Produk</a>
+</div>
+
     </div>
 </body>
 </html>

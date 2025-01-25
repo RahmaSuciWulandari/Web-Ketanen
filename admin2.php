@@ -149,21 +149,7 @@ if (!isset($_SESSION["username"])) {
       <i class="fas fa-search absolute left-3 top-3 text-gray-400">
       </i> -->
      </div>
-     <div class="flex items-center space-x-4">
-      <!-- <i class="fas fa-bell text-gray-600">
-      </i> -->
-      <div class="flex items-center space-x-2">
-       <img alt="User Avatar" class="w-10 h-10 rounded-full" height="40" src="https://storage.googleapis.com/a1aa/image/pzJFINbbZe0eDUTJUI0s18W277p5FUUzVJRFEo42fSesKm9PB.jpg" width="40"/>
-       <div>
-        <p class="text-gray-900">
-         WGPedia
-        </p>
-        <p class="text-gray-400 text-sm">
-         Admin
-        </p>
-       </div>
-      </div>
-     </div>
+     
     </div>
     <!-- Dashboard cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
