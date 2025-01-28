@@ -1,3 +1,3 @@
 <?php
-echo password_hash('UMKMKetanen', PASSWORD_BCRYPT);
+echo password_hash('DinoParkKetanen', PASSWORD_BCRYPT);
 ?>

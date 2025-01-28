@@ -90,16 +90,16 @@ if (isset($_GET['id_lapak'])) {
 <!-- Produk Section -->
 <div class="mt-10">
     <h2 class="text-2xl font-bold mb-6 text-black-700">Produk Lapak</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
         <?php
         if ($result_produk->num_rows > 0) {
             while ($row = $result_produk->fetch_assoc()) {
                 $gambar = $row['file_path'] ?: 'default.jpg'; // Gunakan gambar default jika file_path NULL
-                echo '<a href="isiproduk.php?id_produk=' . $row['id_produk'] . '" class="block bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300">';
+                echo '<a href="isiproduk.php?id_produk=' . $row['id_produk'] . '" class="block bg-white p-4 rounded-lg text-center shadow-md hover:shadow-lg transition duration-300">';
                 echo '<div class="rounded overflow-hidden mb-4">';
                 echo '<img src="' . htmlspecialchars($gambar) . '" alt="' . htmlspecialchars($row['nama_produk']) . '" class="w-full h-56 object-cover">';
                 echo '</div>';
-                echo '<h3 class="text-lg font-bold text-teal-800">' . htmlspecialchars($row['nama_produk']) . '</h3>';
+                echo '<h3 class="text-lg font-bold">' . htmlspecialchars($row['nama_produk']) . '</h3>';
                 echo '<p class="text-gray-600">' . htmlspecialchars($row['kategori_produk']) . '</p>';
                 echo '</a>';
             }

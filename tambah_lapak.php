@@ -157,9 +157,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <div class="flex h-screen">
     <div class="w-64 bg-white shadow-md">
         <div class="p-6">
-            <h1 class="text-2xl font-bold text-teal-600 mb-6">WGPedia</h1>
+            <h1 class="text-2xl font-bold text-teal-600 mb-6">WGP</h1>
             <nav class="space-y-2">
-                <a href="admin.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
+                <a href="admin2.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
                     <i class="fas fa-tachometer-alt mr-3"></i>
                     <span>Dashboard</span>
                 </a>

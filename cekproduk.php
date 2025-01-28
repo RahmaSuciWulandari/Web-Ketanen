@@ -67,12 +67,6 @@ if (isset($_POST['logout'])) {
                 </nav>
             </div>
             <div class="absolute bottom-0 p-6">
-                <form action="" method="post" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
-                    <i class="fas fa-sign-out-alt mr-3"></i>
-                    <button type="submit" name="logout" class="bg-transparent text-gray-600 hover:text-gray-900 cursor-pointer">
-                        Logout
-                    </button>
-                </form>
                 <p class="text-gray-400 text-sm mt-6">© KKNUQDesaKetanen</p>
             </div>
         </div>

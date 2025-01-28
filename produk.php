@@ -36,7 +36,7 @@ $result = $stmt->get_result();
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
  </head>
  <body class="font-roboto bg-gray-100">
-  <header class="bg-teal-700 text-white p-2 shadow-lg">
+  <header class="sticky top-0 z-50 bg-teal-700 text-white p-2 shadow-lg">
    <div class="container mx-auto flex justify-between items-center">
    <div class="flex items-center space-x-1">
    <img src="logowgp.png" alt="Logo WGPedia" class="h-16 w-auto"/> 
@@ -149,40 +149,51 @@ $result = $stmt->get_result();
  </section>
  
  <footer class="bg-teal-800 text-white py-8">
-    <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
-      <div class="text-center md:text-left">
-        <h3 class="text-2xl font-bold">WGP</h3>
-        <div class="flex space-x-4 mt-4">
-  <a href="#"><i class="fas fa-envelope"></i></a>
-  <a href="https://www.instagram.com/wgp_dinopark?igsh=eHhkbXhqZW5kNG13"><i class="fab fa-instagram"></i></a>
-  <a href="#"><i class="fab fa-tiktok"></i></a>
-  <a href="#"><i class="fab fa-youtube"></i></a>
-</div>
-
-      </div>
-      <div class="text-center md:text-left mt-8 md:mt-0">
-        <h4 class="font-bold">SITEMAP</h4>
-        <ul class="mt-4 space-y-2">
-          <li><a href="index.php">HOME</a></li>
-          <li><a href="produk.php">PRODUK</a></li>
-          <li><a href="lapak.php">LAPAK</a></li>
-          <li><a href="tentang.php">TENTANG KAMI</a></li>
-        </ul>
-      </div>
-      
-      <div class="text-center md:text-left mt-8 md:mt-0">
-        <h4 class="font-bold">Let's Talk</h4>
-        <ul class="mt-4 space-y-2">
-          <li><a href="tel:+628234567890">(+62) 82 3456 7890</a></li>
-          <li><a href="mailto:info@umkmketanen.com">info@umkmketanen.com</a></li>
-          <li>Desa Ketanen, Kecamatan Panceng, Kabupaten Gresik</li>
-        </ul>
+  <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+    <div class="text-center md:text-left">
+      <h3 class="text-2xl font-bold">WGP</h3>
+      <div class="flex space-x-4 mt-4">
+        <a href="https://wa.me/6282333888807" target="_blank" rel="noopener noreferrer" class="hover:text-teal-400">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://www.instagram.com/wgp_dinopark?igsh=eHhkbXhqZW5kNG13" class="hover:text-teal-400">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.tiktok.com/@wgp.dino.park?_t=ZS-8tGecttmHgI&_r=1" class="hover:text-teal-400">
+          <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61559314482951" class="hover:text-teal-400">
+          <i class="fab fa-facebook"></i>
+        </a>
       </div>
     </div>
-    <div class="text-center mt-8">
-      <p>© Copyright 2024 WGP. All Rights Reserved Design By <a class="text-teal-300" href="https://www.instagram.com/kknuq_ketanen2025?igsh=MXR3OTJrcnlmcnh4bA==">KKNUQDesaKetanen</a></p>
+    <div class="text-center md:text-left mt-8 md:mt-0">
+      <h4 class="font-bold">SITEMAP</h4>
+      <ul class="mt-4 space-y-2">
+        <li><a href="index.php" class="hover:text-teal-400">HOME</a></li>
+        <li><a href="produk.php" class="hover:text-teal-400">PRODUK</a></li>
+        <li><a href="lapak.php" class="hover:text-teal-400">LAPAK</a></li>
+        <li><a href="tentang.php" class="hover:text-teal-400">TENTANG KAMI</a></li>
+      </ul>
     </div>
-  </footer>
+    <div class="text-center md:text-left mt-8 md:mt-0">
+      <h4 class="font-bold">Let's Talk</h4>
+      <ul class="mt-4 space-y-2">
+        <li><a href="tel:+6282333888807" class="hover:text-teal-400">(+62) 823-3388-8807</a></li>
+        <li>Desa Ketanen, </li>
+        <li>Kecamatan Panceng, Kabupaten Gresik</li>
+      </ul>
+    </div>
+  </div>
+  <div class="text-center mt-8">
+    <p>
+      © Copyright 2024 WGP. All Rights Reserved Design By 
+      <a class="text-teal-300 hover:text-teal-400" href="https://www.instagram.com/kknuq_ketanen2025?igsh=MXR3OTJrcnlmcnh4bA==">
+        KKNUQDesaKetanen
+      </a>
+    </p>
+  </div>
+</footer>
   <script>
    document.getElementById('menu-button').addEventListener('click', function() {
      var menu = document.getElementById('mobile-menu');

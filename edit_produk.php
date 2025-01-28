@@ -4,7 +4,7 @@ session_start();
 
 // Cek apakah user sudah login
 if (!isset($_SESSION['username'])) {
-    header("Location: login.html");
+    header("Location: login.php");
     exit();
 }
 
@@ -44,19 +44,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($stmt->execute()) {
         // Proses upload gambar baru
         if (isset($_FILES['gambar']['name']) && count($_FILES['gambar']['name']) > 0) {
-            $target_dir = "uploads/";
-
             foreach ($_FILES['gambar']['name'] as $index => $filename) {
                 if ($_FILES['gambar']['error'][$index] == 0) {
-                    $imageFileType = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-                    $unique_file_name = pathinfo($filename, PATHINFO_FILENAME) . "_" . time() . "_" . $index . "." . $imageFileType;
-                    $target_file = $target_dir . $unique_file_name;
-
-                    if (move_uploaded_file($_FILES['gambar']['tmp_name'][$index], $target_file)) {
-                        $sql_insert_gambar = "INSERT INTO produk_gambar (id_produk, file_path, uploaded_at) VALUES (?, ?, NOW())";
-                        $stmt_insert_gambar = $koneksi->prepare($sql_insert_gambar);
-                        $stmt_insert_gambar->bind_param("is", $id_produk, $unique_file_name);
-                        $stmt_insert_gambar->execute();
+                    $target_dir = "uploads/";
+                    if (!is_dir($target_dir)) {
+                        mkdir($target_dir, 0777, true); // Pastikan folder uploads ada dan dapat menulis
+                    }
+                    $target_file = $target_dir . basename($filename);
+                    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+        
+                    // Cek apakah gambar valid
+                    if (in_array($imageFileType, ['jpg', 'jpeg', 'png', 'gif'])) {
+                        if (move_uploaded_file($_FILES['gambar']['tmp_name'][$index], $target_file)) {
+                            // Menyimpan nama gambar yang diupload ke database
+                            $unique_file_name = $target_file;
+                            $sql_insert_gambar = "INSERT INTO produk_gambar (id_produk, file_path, uploaded_at) VALUES (?, ?, NOW())";
+                            $stmt_insert_gambar = $koneksi->prepare($sql_insert_gambar);
+                            $stmt_insert_gambar->bind_param("is", $id_produk, $unique_file_name);
+                            if (!$stmt_insert_gambar->execute()) {
+                                echo "Gagal menyimpan gambar ke database.";
+                            }
+                        } else {
+                            echo "Gambar gagal diupload.";
+                        }
+                    } else {
+                        echo "Hanya gambar dengan ekstensi JPG, JPEG, PNG, GIF yang diperbolehkan.";
                     }
                 }
             }
@@ -135,19 +147,21 @@ if (isset($_GET['delete_gambar_id'])) {
                     <?php if (!empty($gambar_rows)) { ?>
                         <?php foreach ($gambar_rows as $gambar) { ?>
                             <div class="mb-2">
-                                <img src="<?php echo $gambar['file_path']; ?>" alt="Gambar Produk" class="w-24 h-24 object-cover rounded-md shadow">
-                                <a href="edit_produk.php?id=<?php echo $id_produk; ?>&delete_gambar_id=<?php echo $gambar['id_gambar']; ?>" class="text-red-500 text-sm">Hapus Gambar</a>
+                                <?php 
+                                echo '<img src="' . $gambar['file_path'] . '?v=' . time() . '" alt="Gambar Produk" class="w-24 h-24 object-cover rounded-md shadow">';
+                                echo '<a href="edit_produk.php?id=' . $id_produk . '&delete_gambar_id=' . $gambar["id_gambar"] . '" class="text-red-500 text-sm">Hapus Gambar</a>';
+                                ?>
                             </div>
                         <?php } ?>
                     <?php } ?>
                     <input type="file" name="gambar[]" multiple class="w-full p-2 border rounded-md">
                 </div>
 
-                <!-- Submit Button -->
-                <div class="flex justify-between items-center">
-                    <button type="submit" class="bg-teal-500 text-white px-4 py-2 rounded-md">Simpan</button>
-                    <a href="cekproduk.php?id=<?php echo $produk['id_lapak']; ?>" class="text-teal-500">Kembali</a>
-                </div>
+                <div class="flex justify-end space-x-4">
+                <a href="cekproduk.php?id=<?php echo $produk['id_lapak']; ?>" class="px-4 py-2 bg-gray-300 rounded-md">Kembali</a>
+                <button type="submit" class="px-4 py-2 bg-teal-500 text-white rounded-md">Simpan</button>
+            </div>
+            <br />
             </form>
         </div>
     </div>

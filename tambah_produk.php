@@ -41,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               // Handle multiple image uploads
               if (isset($files['name'][$index]['gambar']) && is_array($files['name'][$index]['gambar'])) {
                   $upload_dir = "uploads/"; // Directory to save images
-
                   foreach ($files['name'][$index]['gambar'] as $file_index => $file_name) {
                       $image_name = basename($file_name); // Get the image name without path
                       $target_file = $upload_dir . $image_name; // Define the target file path
@@ -126,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
                         </div>
                         <div class="col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Upload Gambar Produk (Multiple)</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Upload Gambar Produk </label>
                             <input type="file" name="produk[${i}][gambar][]" class="w-full py-2 px-4 border border-gray-300 rounded-lg" accept="image/*" multiple required />
                         </div>
                     </div>
@@ -141,9 +140,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="w-64 bg-white shadow-md fixed h-full">
       <!-- Sidebar content here -->
       <div class="p-6">
-        <h1 class="text-2xl font-bold text-teal-600 mb-6">WGPedia</h1>
+        <h1 class="text-2xl font-bold text-teal-600 mb-6">WGP</h1>
         <nav class="space-y-2">
-          <a href="admin.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
+          <a href="admin2.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
             <i class="fas fa-tachometer-alt mr-3"></i>
             <span>Dashboard</span>
           </a>
@@ -158,12 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </nav>
       </div>
       <div class="absolute bottom-0 p-6">
-        <a class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md mt-2" href="#">
-          <i class="fas fa-sign-out-alt mr-3"></i>
-          <form action="" method="post">
-        <input type="submit" name="logout" value="Logout">
-    </form>
-        </a>
+        
         <p class="text-gray-400 text-sm mt-6">© KKNUQDesaKetanen</p>
       </div>
     </div>

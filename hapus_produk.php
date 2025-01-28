@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("i", $id_produk);
 
         if ($stmt->execute()) {
-            header("Location: cek_produk.php?id=" . $produk['id_lapak']);
+            header("Location: cekproduk.php?id=" . $produk['id_lapak']);
             exit();
         } else {
             echo "Gagal menghapus produk.";
