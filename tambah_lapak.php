@@ -2,6 +2,12 @@
 include "config.php";
 session_start();
 
+// Cek apakah user sudah login
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nama_lapak = trim($_POST['nama_lapak']);
     $alamat = trim($_POST['alamat']);

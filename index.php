@@ -43,7 +43,7 @@ include "config.php";
       <ul class="flex flex-col space-y-4">
         <li><a class="hover:underline" href="index.php">Home</a></li>
         <li><a class="hover:underline" href="produk.php">Produk</a></li>
-        <li><a class="hover:underline" href="tentang.php">Tentang Kami</a></li>
+        <li><a class="hover:underline" href="tentang.php">Tentang</a></li>
         <li><a class="hover:underline" href="lapak.php">Lapak</a></li>
         <li><a href="login.php" class="bg-white text-teal-700 px-4 py-2 rounded hover:bg-teal-600 hover:text-white transition duration-300">Login</a></li>
       </ul>

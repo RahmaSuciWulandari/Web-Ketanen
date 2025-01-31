@@ -2,6 +2,12 @@
 include "config.php";
 session_start();
 
+// Cek apakah user sudah login
+if (!isset($_SESSION['username'])) {
+  header("Location: login.php");
+  exit();
+}
+
 if (isset($_GET['id_lapak']) && !empty($_GET['id_lapak'])) {
   $id_lapak = $_GET['id_lapak'];
   $_SESSION['id_lapak'] = $id_lapak; // Simpan ke session untuk penggunaan selanjutnya
