@@ -4,40 +4,40 @@ include "config.php";
 // Periksa apakah parameter 'id_lapak' ada dalam URL
 if (isset($_GET['id_lapak'])) {
     $id_lapak = intval($_GET['id_lapak']); // Sanitasi input
+    $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 
-    // Query SQL untuk mengambil data lapak
-    $sql = "SELECT lapak.nama_lapak, lapak.alamat, lapak.kontak, lapak.deskripsi, lapak_gambar.file_pathg
-            FROM lapak
-            LEFT JOIN lapak_gambar ON lapak.id_lapak = lapak_gambar.id_lapak
-            WHERE lapak.id_lapak = ?";
+    // Query untuk mendapatkan informasi lapak
+    $sql = "SELECT nama_lapak, alamat, kontak, deskripsi, file_pathg FROM lapak LEFT JOIN lapak_gambar ON lapak.id_lapak = lapak_gambar.id_lapak WHERE lapak.id_lapak = ?";
     $stmt = $koneksi->prepare($sql);
-
-    // Cek jika query gagal disiapkan
-    if ($stmt === false) {
-        die('Error preparing query: ' . $koneksi->error);
-    }
-
-    // Mengikat parameter
     $stmt->bind_param("i", $id_lapak);
-
-    // Menjalankan query
     $stmt->execute();
     $result = $stmt->get_result();
+    $lapak_data = $result->fetch_assoc() ?: die("Lapak tidak ditemukan.");
 
-    // Periksa apakah data lapak ditemukan
-    if ($result->num_rows > 0) {
-        $lapak_data = $result->fetch_assoc(); // Ambil data lapak
-    } else {
-        die("Lapak tidak ditemukan.");
-    }
+    // Setup Pagination
+    $perPage = 12; // Jumlah produk per halaman
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $offset = ($page - 1) * $perPage;
 
-    // Query untuk mendapatkan produk terkait lapak
-    $sql_produk = "SELECT produk.id_produk, produk.nama_produk, produk.kategori_produk, produk.deskripsi, produk_gambar.file_path
-                   FROM produk
-                   LEFT JOIN produk_gambar ON produk.id_produk = produk_gambar.id_produk
-                   WHERE produk.id_lapak = ?";
+    // Query untuk menghitung total produk dalam lapak
+    $countQuery = "SELECT COUNT(*) AS total FROM produk WHERE id_lapak = ? AND (nama_produk LIKE ? OR kategori_produk LIKE ?)";
+    $countStmt = $koneksi->prepare($countQuery);
+    $searchTermWithWildcards = "%" . $searchTerm . "%";
+    $countStmt->bind_param("iss", $id_lapak, $searchTermWithWildcards, $searchTermWithWildcards);
+    $countStmt->execute();
+    $countResult = $countStmt->get_result();
+    $totalRows = $countResult->fetch_assoc()['total'];
+    $totalPages = ceil($totalRows / $perPage);
+
+    // Query produk dengan paginasi
+    $sql_produk = "SELECT produk.id_produk, produk.nama_produk, produk.kategori_produk, MIN(produk_gambar.file_path) AS file_path 
+                    FROM produk 
+                    LEFT JOIN produk_gambar ON produk.id_produk = produk_gambar.id_produk 
+                    WHERE produk.id_lapak = ? AND (produk.nama_produk LIKE ? OR produk.kategori_produk LIKE ?)
+                    GROUP BY produk.id_produk 
+                    LIMIT ? OFFSET ?";
     $stmt_produk = $koneksi->prepare($sql_produk);
-    $stmt_produk->bind_param("i", $id_lapak);
+    $stmt_produk->bind_param("issii", $id_lapak, $searchTermWithWildcards, $searchTermWithWildcards, $perPage, $offset);
     $stmt_produk->execute();
     $result_produk = $stmt_produk->get_result();
 } else {
@@ -91,23 +91,25 @@ if (isset($_GET['id_lapak'])) {
 <div class="mt-10">
     <h2 class="text-2xl font-bold mb-6 text-black-700">Produk Lapak</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-        <?php
-        if ($result_produk->num_rows > 0) {
-            while ($row = $result_produk->fetch_assoc()) {
-                $gambar = $row['file_path'] ?: 'default.jpg'; // Gunakan gambar default jika file_path NULL
-                echo '<a href="isiproduk.php?id_produk=' . $row['id_produk'] . '" class="block bg-white p-4 rounded-lg text-center shadow-md hover:shadow-lg transition duration-300">';
-                echo '<div class="rounded overflow-hidden mb-4">';
-                echo '<img src="' . htmlspecialchars($gambar) . '" alt="' . htmlspecialchars($row['nama_produk']) . '" class="w-full h-56 object-cover">';
-                echo '</div>';
-                echo '<h3 class="text-lg font-bold">' . htmlspecialchars($row['nama_produk']) . '</h3>';
-                echo '<p class="text-gray-600">' . htmlspecialchars($row['kategori_produk']) . '</p>';
-                echo '</a>';
-            }
-        } else {
-            echo "<p class='text-gray-700'>Tidak ada produk yang ditemukan.</p>";
-        }
-        ?>
-    </div>
+                <?php while ($row = $result_produk->fetch_assoc()): ?>
+                    <a href="isiproduk.php?id_produk=<?php echo $row['id_produk']; ?>" class="block bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                        <img src="<?php echo htmlspecialchars($row['file_path'] ?: 'default.jpg'); ?>" class="w-full h-56 object-cover mb-4 rounded">
+                        <h3 class="text-lg font-bold"> <?php echo htmlspecialchars($row['nama_produk']); ?> </h3>
+                        <p class="text-gray-600"> <?php echo htmlspecialchars($row['kategori_produk']); ?> </p>
+                    </a>
+                <?php endwhile; ?>
+            </div>
+            <div class="mt-8 flex justify-center space-x-2">
+                <?php if ($page > 1): ?>
+                    <a href="?id_lapak=<?php echo $id_lapak; ?>&search=<?php echo urlencode($searchTerm); ?>&page=<?php echo $page - 1; ?>" class="bg-teal-500 text-white px-3 py-2 rounded">«</a>
+                <?php endif; ?>
+                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                    <a href="?id_lapak=<?php echo $id_lapak; ?>&search=<?php echo urlencode($searchTerm); ?>&page=<?php echo $i; ?>" class="px-3 py-2 rounded <?php echo ($i == $page) ? 'bg-teal-700 text-white' : 'bg-gray-200'; ?>"> <?php echo $i; ?> </a>
+                <?php endfor; ?>
+                <?php if ($page < $totalPages): ?>
+                    <a href="?id_lapak=<?php echo $id_lapak; ?>&search=<?php echo urlencode($searchTerm); ?>&page=<?php echo $page + 1; ?>" class="bg-teal-500 text-white px-3 py-2 rounded">»</a>
+                <?php endif; ?>
+            </div>
 </div>
 
 </body>

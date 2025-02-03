@@ -1,0 +1,154 @@
+<?php
+include "config.php";
+session_start();
+
+// Cek apakah user sudah login
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Ambil data berita dengan pagination
+$limit = 10; // Jumlah data per halaman
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$start = ($page > 1) ? ($page * $limit) - $limit : 0;
+
+$sql = "SELECT berita.*, 
+        (SELECT file_path FROM berita_gambar WHERE berita_gambar.id_berita = berita.id LIMIT 1) AS gambar 
+        FROM berita 
+        ORDER BY tanggal DESC 
+        LIMIT $start, $limit";
+$result = $koneksi->query($sql);
+
+
+$total = $koneksi->query("SELECT COUNT(*) as count FROM berita")->fetch_assoc()['count'];
+$pages = ceil($total / $limit);
+
+// Logout
+if (isset($_POST['logout'])) {
+    $_SESSION['message'] = "Anda telah logout, Silahkan login terlebih dahulu";
+    session_unset();
+    session_destroy();
+    header('location: index.php');
+    exit();
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Berita</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 font-sans">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white shadow-md fixed h-full">
+            <div class="p-6">
+                <h1 class="text-2xl font-bold text-teal-600 mb-6">WGP</h1>
+                <nav class="space-y-2">
+                    <a href="admin2.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
+                        <i class="fas fa-tachometer-alt mr-3"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="adminlapak.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
+                        <i class="fas fa-map-marker-alt mr-3"></i>
+                        <span>Lapak</span>
+                    </a>
+                    <a href="admin_berita.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md bg-blue-100 text-gray-900">
+                        <i class="fas fa-newspaper mr-3"></i>
+                        <span>Berita</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="absolute bottom-0 p-6">
+                <div class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md w-58">
+                    <i class="fas fa-sign-out-alt mr-3"></i>
+                    <form action="" method="post">
+                        <input type="submit" name="logout" value="Logout" class="bg-transparent text-gray-600 hover:text-gray-900 cursor-pointer">
+                    </form>
+                </div>
+                <p class="text-gray-400 text-sm mt-6">© KKNUQDesaKetanen</p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-6 ml-64">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="flex justify-between items-center mb-6">
+                    <h1 class="text-2xl font-semibold">Daftar Berita</h1>
+                    <a href="tambah_berita.php" class="bg-teal-500 text-white px-4 py-2 rounded-md">+ Tambah Berita</a>
+                </div>
+
+                <!-- Table -->
+                <div class="bg-white shadow-md rounded-md overflow-x-auto">
+                    <table class="min-w-full bg-white">
+                        <thead>
+                            <tr>
+                                <th class="py-2 px-4 bg-gray-100 text-left text-sm font-semibold text-gray-600">No.</th>
+                                <th class="py-2 px-4 bg-gray-100 text-left text-sm font-semibold text-gray-600">Judul</th>
+                                <th class="py-2 px-4 bg-gray-100 text-left text-sm font-semibold text-gray-600">Tanggal</th>
+                                <th class="py-2 px-4 bg-gray-100 text-left text-sm font-semibold text-gray-600">Gambar</th>
+                                <th class="py-2 px-4 bg-gray-100 text-left text-sm font-semibold text-gray-600">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php 
+                            $no = $start + 1; 
+                            while ($row = $result->fetch_assoc()): ?>
+                                <tr class="hover:bg-gray-50">
+                                    <!-- Nomor -->
+                                    <td class="py-2 px-4 border-b font-medium text-gray-800"><?php echo $no++; ?></td>
+                                    <!-- Judul -->
+                                     <td class="py-2 px-4 border-b font-medium text-gray-800"><?php echo $row['judul']; ?></td>
+                                    <!-- Tanggal -->
+                                    <td class="py-2 px-4 border-b text-gray-600"><?php echo date("d-m-Y", strtotime($row['tanggal'])); ?></td>
+                                    <!-- Gambar -->
+<td class="py-2 px-4 border-b">
+    <?php if (!empty($row['gambar'])): ?>
+        <img src="uploads/berita/<?php echo $row['gambar']; ?>" alt="Gambar Berita" class="h-16 w-24 object-cover rounded-md">
+    <?php else: ?>
+        <span class="text-gray-500">Tidak ada gambar</span>
+    <?php endif; ?>
+</td>
+
+                                    <!-- Aksi -->
+                                    <td class="py-2 px-4 border-b">
+                                        <div class="flex space-x-2">
+                                            <!-- Edit -->
+                                            <a href="edit_berita.php?id=<?php echo $row['id']; ?>" class="text-yellow-500 hover:text-yellow-600">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </a>
+                                            <!-- Hapus -->
+                                            <form action="hapus_berita.php" method="POST" class="inline">
+                                                <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                                                <button type="submit" class="text-red-500 hover:text-red-600" onclick="return confirm('Apakah Anda yakin ingin menghapus?')">
+                                                    <i class="fas fa-trash"></i> Hapus
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+
+                    <!-- Pagination -->
+                    <div class="mt-4 flex justify-center">
+                        <?php for ($i = 1; $i <= $pages; $i++): ?>
+                            <a href="?page=<?php echo $i; ?>" class="px-3 py-2 bg-gray-200 rounded-md hover:bg-gray-300"><?php echo $i; ?></a>
+                        <?php endfor; ?>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

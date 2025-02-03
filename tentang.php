@@ -87,79 +87,44 @@ $data['total_lapak'] = $result_lapak->fetch_assoc()['total'];
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
  </head>
  <body class="font-roboto bg-gray-100">
-  <header class=" sticky top-0 z-50 bg-teal-700 text-white p-2 shadow-lg">
-   <div class="container mx-auto flex justify-between items-center">
-   <div class="flex items-center space-x-1">
-   <img src="logowgp.png" alt="Logo WGPedia" class="h-16 w-auto"/> 
-   <h1 class="text-3xl font-bold">
-     WGP
-    </h1>
+ <header class="sticky top-0 bg-teal-700 text-white p-6 shadow-lg z-50">
+    <div class="container mx-auto flex justify-between items-center">
+      <div class="flex items-center">
+        <img src="logowgp.png" alt="Logo WGPedia" class="h-12 w-auto"/>
+        <h1 class="text-3xl font-bold"><a href="index.php">WGP</a></h1>
+      </div>
+      <nav class="w-full md:w-auto">
+        <!-- Desktop menu -->
+        <ul class="hidden md:flex space-x-6">
+          <li><a class="hover:underline" href="index.php">Home</a></li>
+          <li><a class="hover:underline" href="produk.php">Produk</a></li>
+          <li><a class="hover:underline" href="tentang.php">Tentang</a></li>
+          <li><a class="hover:underline" href="lapak.php">Lapak</a></li>
+          <li><a class="hover:underline" href="berita.php">Berita</a></li>
+          <li><a href="login.php" class="bg-white text-teal-700 px-4 py-2 rounded hover:bg-teal-600 hover:text-white transition duration-300">Login</a></li>
+        </ul>
+        
+        <!-- Mobile menu button -->
+        <div class="md:hidden flex items-center absolute right-8 top-9">
+          <!-- Ikon hamburger -->
+          <button id="menu-button" class="text-white focus:outline-none">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </nav>
     </div>
-    <nav>
-     <ul class="hidden md:flex space-x-6">
-      <li>
-       <a class="hover:underline" href="index.php">
-        Home
-       </a>
-      </li>
-      <li>
-       <a class="hover:underline" href="produk.php">
-        Produk
-       </a>
-      </li>
-      <li>
-       <a class="hover:underline" href="tentang.php">
-        Tentang
-       </a>
-      </li>
-      <li>
-       <a class="hover:underline" href="lapak.php">
-        Lapak
-       </a>
-      </li>
-      <li>
-      <a href="login.php" class="bg-white text-teal-700 px-4 py-2 rounded hover:bg-teal-600 hover:text-white transition duration-300">
-       Login
-      </a>
-      </li>
-     </ul>
-     <div class="md:hidden">
-      <button id="menu-button" class="text-white focus:outline-none mt-3 mr-6">
-       <i class="fas fa-bars">
-       </i>
-      </button>
-     </div>
-    </nav>
-   </div>
-   <div id="mobile-menu" class="hidden md:hidden">
-    <ul class="flex flex-col space-y-4 mt-4 mb-4">
-     <li>
-      <a class="hover:underline" href="index.php">
-       Home
-      </a>
-     </li>
-     <li>
-      <a class="hover:underline" href="produk.php">
-       Produk
-      </a>
-     </li>
-     <li>
-      <a class="hover:underline" href="tentang.php">
-       Tentang
-      </a>
-     </li>
-     <li>
-      <a class="hover:underline" href="Lapak.php">
-       Lapak
-      </a>
-     </li>
-     <li>
-      <a href="login.php" class="bg-white text-teal-700 px-4 py-2 rounded hover:bg-teal-600 hover:text-white transition duration-300">
-       Login
-      </a>
-      </li>
-    </ul>
-   </div>
+
+    <!-- Mobile dropdown menu -->
+    <div id="mobile-menu" class="hidden md:hidden mt-4">
+      <ul class="flex flex-col space-y-4">
+        <li><a class="hover:underline" href="index.php">Home</a></li>
+        <li><a class="hover:underline" href="produk.php">Produk</a></li>
+        <li><a class="hover:underline" href="tentang.php">Tentang</a></li>
+        <li><a class="hover:underline" href="lapak.php">Lapak</a></li>
+        <li><a class="hover:underline" href="berita.php">Berita</a></li>
+        <li><a href="login.php" class="bg-white text-teal-700 px-4 py-2 rounded hover:bg-teal-600 hover:text-white transition duration-300">Login</a></li>
+      </ul>
+    </div>
   </header>
    <!-- About Us Section -->
    <main class="container mx-auto px-4 py-8">
@@ -225,34 +190,38 @@ $data['total_lapak'] = $result_lapak->fetch_assoc()['total'];
      Lainnya
     </h2>
     <div class="grid md:grid-cols-3 gap-8">
-     <div class="bg-white p-6 rounded-lg shadow-lg">
-      <img alt="Globe icon" class="mx-auto mb-4 w-16" src="https://placehold.co/100x100"/>
-      <h3 class="text-xl font-bold mb-2">
-      <?php echo $data['total_pengunjung']."+ Pengunjung"; ?>
-      </h3>
-      <a class="text-orange-600 hover:underline" href="index.php">
-       Learn more
-      </a>
-     </div>
-     <div class="bg-white p-6 rounded-lg shadow-lg">
-      <img alt="People icon" class="mx-auto mb-4 w-16" src="https://placehold.co/100x100"/>
-      <h3 class="text-xl font-bold mb-2">
-      <?php echo $data['total_lapak']."+ Lapak"; ?>
-      </h3>
-      <a class="text-orange-600 hover:underline" href="lapak.php">
-       Learn more
-      </a>
-     </div>
-     <div class="bg-white p-6 rounded-lg shadow-lg">
-      <img alt="Network icon" class="mx-auto mb-4 w-16" src="https://placehold.co/100x100"/>
-      <h3 class="text-xl font-bold mb-2">
-      <?php echo $data['total_produk']."+ Produk"; ?>
-      </h3>
-      <a class="text-orange-600 hover:underline" href="produk.php">
-       Learn more
-      </a>
-     </div>
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+        <!-- Ikon Globe diganti dengan ikon pengunjung -->
+        <i class="fas fa-users mx-auto mb-4 text-4xl text-blue-500"></i>
+        <h3 class="text-xl font-bold mb-2">
+            <?php echo $data['total_pengunjung']."+ Pengunjung"; ?>
+        </h3>
+        <a class="text-orange-600 hover:underline" href="index.php">
+            Learn more
+        </a>
     </div>
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+        <!-- Ikon People diganti dengan ikon lapak -->
+        <i class="fas fa-store mx-auto mb-4 text-4xl text-green-500"></i>
+        <h3 class="text-xl font-bold mb-2">
+            <?php echo $data['total_lapak']."+ Lapak"; ?>
+        </h3>
+        <a class="text-orange-600 hover:underline" href="lapak.php">
+            Learn more
+        </a>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+        <!-- Ikon Network diganti dengan ikon produk -->
+        <i class="fas fa-box mx-auto mb-4 text-4xl text-red-500"></i>
+        <h3 class="text-xl font-bold mb-2">
+            <?php echo $data['total_produk']."+ Produk"; ?>
+        </h3>
+        <a class="text-orange-600 hover:underline" href="produk.php">
+            Learn more
+        </a>
+    </div>
+</div>
+
    </section>
    <!-- <section class="text-center">
     <div class="flex justify-center space-x-4 mb-4">

@@ -15,7 +15,7 @@ include "config.php";
 <header class="sticky top-0 bg-teal-700 text-white p-6 shadow-lg z-50">
     <div class="container mx-auto flex justify-between items-center">
       <div class="flex items-center">
-        <img src="logowgp.png" alt="Logo WGPedia" class="h-10 w-10 mr-2"/>
+        <img src="logowgp.png" alt="Logo WGPedia" class="h-12 w-auto"/>
         <h1 class="text-3xl font-bold"><a href="index.php">WGP</a></h1>
       </div>
       <nav class="w-full md:w-auto">
@@ -25,6 +25,7 @@ include "config.php";
           <li><a class="hover:underline" href="produk.php">Produk</a></li>
           <li><a class="hover:underline" href="tentang.php">Tentang</a></li>
           <li><a class="hover:underline" href="lapak.php">Lapak</a></li>
+          <li><a class="hover:underline" href="berita.php">Berita</a></li>
           <li><a href="login.php" class="bg-white text-teal-700 px-4 py-2 rounded hover:bg-teal-600 hover:text-white transition duration-300">Login</a></li>
         </ul>
         
@@ -45,6 +46,7 @@ include "config.php";
         <li><a class="hover:underline" href="produk.php">Produk</a></li>
         <li><a class="hover:underline" href="tentang.php">Tentang</a></li>
         <li><a class="hover:underline" href="lapak.php">Lapak</a></li>
+        <li><a class="hover:underline" href="berita.php">Berita</a></li>
         <li><a href="login.php" class="bg-white text-teal-700 px-4 py-2 rounded hover:bg-teal-600 hover:text-white transition duration-300">Login</a></li>
       </ul>
     </div>

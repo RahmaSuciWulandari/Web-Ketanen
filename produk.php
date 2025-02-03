@@ -4,22 +4,33 @@ include "config.php";
 // Tangkap input pencarian dari form
 $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 
-// Query untuk menampilkan produk
+// Pagination setup
+$perPage = 12; // Jumlah produk per halaman
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $perPage;
+
+// Query untuk menghitung total produk
+$countQuery = "SELECT COUNT(*) AS total FROM produk WHERE nama_produk LIKE ? OR kategori_produk LIKE ?";
+$countStmt = $koneksi->prepare($countQuery);
+$searchTermWithWildcards = "%" . $searchTerm . "%";
+$countStmt->bind_param("ss", $searchTermWithWildcards, $searchTermWithWildcards);
+$countStmt->execute();
+$countResult = $countStmt->get_result();
+$totalRows = $countResult->fetch_assoc()['total'];
+$totalPages = ceil($totalRows / $perPage);
+
+// Query untuk menampilkan produk dengan pagination
 $sql = "SELECT produk.id_produk, produk.nama_produk, produk.kategori_produk, MIN(produk_gambar.file_path) AS file_path 
         FROM produk 
         LEFT JOIN produk_gambar ON produk.id_produk = produk_gambar.id_produk 
         WHERE produk.nama_produk LIKE ? OR produk.kategori_produk LIKE ? 
         GROUP BY produk.id_produk 
-        LIMIT 6"; // Menampilkan lebih banyak produk hasil pencarian
+        LIMIT ? OFFSET ?";
 
 $stmt = $koneksi->prepare($sql);
-$searchTermWithWildcards = "%" . $searchTerm . "%"; // Menambahkan wildcard untuk pencarian
-
-$stmt->bind_param("ss", $searchTermWithWildcards, $searchTermWithWildcards); // Bind parameter
-
+$stmt->bind_param("ssii", $searchTermWithWildcards, $searchTermWithWildcards, $perPage, $offset);
 $stmt->execute();
 $result = $stmt->get_result();
-
 ?>
 
 
@@ -36,79 +47,44 @@ $result = $stmt->get_result();
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
  </head>
  <body class="font-roboto bg-gray-100">
-  <header class="sticky top-0 z-50 bg-teal-700 text-white p-2 shadow-lg">
-   <div class="container mx-auto flex justify-between items-center">
-   <div class="flex items-center space-x-1">
-   <img src="logowgp.png" alt="Logo WGPedia" class="h-16 w-auto"/> 
-   <h1 class="text-3xl font-bold">
-   <a href="index.php">WGP</a>
-    </h1>
+ <header class="sticky top-0 bg-teal-700 text-white p-6 shadow-lg z-50">
+    <div class="container mx-auto flex justify-between items-center">
+      <div class="flex items-center">
+        <img src="logowgp.png" alt="Logo WGPedia" class="h-12 w-auto"/>
+        <h1 class="text-3xl font-bold"><a href="index.php">WGP</a></h1>
+      </div>
+      <nav class="w-full md:w-auto">
+        <!-- Desktop menu -->
+        <ul class="hidden md:flex space-x-6">
+          <li><a class="hover:underline" href="index.php">Home</a></li>
+          <li><a class="hover:underline" href="produk.php">Produk</a></li>
+          <li><a class="hover:underline" href="tentang.php">Tentang</a></li>
+          <li><a class="hover:underline" href="lapak.php">Lapak</a></li>
+          <li><a class="hover:underline" href="berita.php">Berita</a></li>
+          <li><a href="login.php" class="bg-white text-teal-700 px-4 py-2 rounded hover:bg-teal-600 hover:text-white transition duration-300">Login</a></li>
+        </ul>
+        
+        <!-- Mobile menu button -->
+        <div class="md:hidden flex items-center absolute right-8 top-9">
+          <!-- Ikon hamburger -->
+          <button id="menu-button" class="text-white focus:outline-none">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </nav>
     </div>
-    <nav>
-     <ul class="hidden md:flex space-x-6">
-      <li>
-       <a class="hover:underline" href="index.php">
-        Home
-       </a>
-      </li>
-      <li>
-       <a class="hover:underline" href="produk.php">
-        Produk
-       </a>
-      </li>
-      <li>
-       <a class="hover:underline" href="tentang.php">
-        Tentang
-       </a>
-      </li>
-      <li>
-       <a class="hover:underline" href="lapak.php">
-        Lapak
-       </a>
-      </li>
-      <li>
-      <a href="login.php" class="bg-white text-teal-700 px-4 py-2 rounded hover:bg-teal-600 hover:text-white transition duration-300">
-       Login
-      </a>
-      </li>
-     </ul>
-     <div class="md:hidden">
-      <button id="menu-button" class="text-white focus:outline-none mt-2 mr-6">
-       <i class="fas fa-bars">
-       </i>
-      </button>
-     </div>
-    </nav>
-   </div>
-   <div id="mobile-menu" class="hidden md:hidden">
-    <ul class="flex flex-col space-y-4 mt-4 mb-4">
-     <li>
-      <a class="hover:underline" href="index.php">
-       Home
-      </a>
-     </li>
-     <li>
-      <a class="hover:underline" href="produk.php">
-       Produk
-      </a>
-     </li>
-     <li>
-      <a class="hover:underline" href="tentang.php">
-       Tentang
-      </a>
-     </li>
-     <li>
-       <a class="hover:underline" href="lapak.php">
-        Lapak
-       </a>
-      </li>
-      <li>
-      <a href="login.php" class="bg-white text-teal-700 px-4 py-2 rounded hover:bg-teal-600 hover:text-white transition duration-300">
-       Login
-      </a>
-      </li>
-    </ul>
-   </div>
+
+    <!-- Mobile dropdown menu -->
+    <div id="mobile-menu" class="hidden md:hidden mt-4">
+      <ul class="flex flex-col space-y-4">
+        <li><a class="hover:underline" href="index.php">Home</a></li>
+        <li><a class="hover:underline" href="produk.php">Produk</a></li>
+        <li><a class="hover:underline" href="tentang.php">Tentang</a></li>
+        <li><a class="hover:underline" href="lapak.php">Lapak</a></li>
+        <li><a class="hover:underline" href="berita.php">Berita</a></li>
+        <li><a href="login.php" class="bg-white text-teal-700 px-4 py-2 rounded hover:bg-teal-600 hover:text-white transition duration-300">Login</a></li>
+      </ul>
+    </div>
   </header>
    <section class="py-12 bg-gray-50">
     <div class="container mx-auto text-center">
@@ -143,7 +119,26 @@ $result = $stmt->get_result();
     }
 ?>
 </div>
+<!-- Pagination -->
+<div class="mt-8 flex justify-center space-x-2">
+            <!-- Tombol Previous -->
+            <?php if ($page > 1): ?>
+                <a href="?search=<?php echo urlencode($searchTerm); ?>&page=<?php echo $page - 1; ?>" class="bg-teal-500 text-white px-3 py-2 rounded hover:bg-teal-600 transition duration-300">«</a>
+            <?php endif; ?>
 
+            <!-- Nomor Halaman -->
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <a href="?search=<?php echo urlencode($searchTerm); ?>&page=<?php echo $i; ?>" 
+                   class="px-3 py-2 rounded transition duration-300 <?php echo ($i == $page) ? 'bg-teal-700 text-white' : 'bg-gray-200 hover:bg-teal-500 hover:text-white'; ?>">
+                   <?php echo $i; ?>
+                </a>
+            <?php endfor; ?>
+
+            <!-- Tombol Next -->
+            <?php if ($page < $totalPages): ?>
+                <a href="?search=<?php echo urlencode($searchTerm); ?>&page=<?php echo $page + 1; ?>" class="bg-teal-500 text-white px-3 py-2 rounded hover:bg-teal-600 transition duration-300">»</a>
+            <?php endif; ?>
+        </div>
   
     </div>
  </section>

@@ -109,34 +109,33 @@ if (!isset($_SESSION["username"])) {
   <div class="flex h-screen">
    <!-- Sidebar -->
    <div class="w-64 bg-white shadow-md">
-    <div class="p-6">
-     <h1 class="text-2xl font-bold text-teal-600 mb-6">WGP</h1>
-     <nav class="space-y-2">
-  <a href="admin2.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
-    <i class="fas fa-tachometer-alt mr-3"></i>
-    <span>Dashboard</span>
-  </a>
-  <a href="adminlapak.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
-    <i class="fas fa-map-marker-alt mr-3"></i>
-    <span>Lapak</span>
-  </a>
-  <!-- <a href="admintentang.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
-    <i class="fas fa-newspaper mr-3"></i>
-    <span>Tentang</span>
-  </a> -->
-</nav>
-
-</div>
-<div class="absolute bottom-0 p-6">
-    <form action="" method="post" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md w-58">
-        <i class="fas fa-sign-out-alt mr-3"></i>
-        <input type="submit" name="logout" value="Logout" class="bg-transparent text-gray-600 hover:text-gray-900 cursor-pointer">
-    </form>
-    <p class="text-gray-400 text-sm mt-6">© KKNUQDesaKetanen</p>
-</div>
-
-
-   </div>
+            <div class="p-6">
+                <h1 class="text-2xl font-bold text-teal-600 mb-6">WGP</h1>
+                <nav class="space-y-2">
+                    <a href="admin2.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
+                        <i class="fas fa-tachometer-alt mr-3"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="adminlapak.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md">
+                        <i class="fas fa-map-marker-alt mr-3"></i>
+                        <span>Lapak</span>
+                    </a>
+                    <a href="admin_berita.php" class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md bg-blue-100 text-gray-900">
+                        <i class="fas fa-newspaper mr-3"></i>
+                        <span>Berita</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="absolute bottom-0 p-6">
+                <div class="flex items-center p-2 text-gray-600 hover:bg-gray-200 rounded-md w-58">
+                    <i class="fas fa-sign-out-alt mr-3"></i>
+                    <form action="" method="post">
+                        <input type="submit" name="logout" value="Logout" class="bg-transparent text-gray-600 hover:text-gray-900 cursor-pointer">
+                    </form>
+                </div>
+                <p class="text-gray-400 text-sm mt-6">© KKNUQDesaKetanen</p>
+            </div>
+        </div>
    <!-- Main content -->
    <div class="flex-1 p-6">
     <!-- Top bar -->
