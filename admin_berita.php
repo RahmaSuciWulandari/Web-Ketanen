@@ -43,6 +43,7 @@ if (isset($_POST['logout'])) {
     <title>Daftar Berita</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="logowgp.png" />
 </head>
 
 <body class="bg-gray-100 font-sans">

@@ -42,6 +42,7 @@ $result = $stmt->get_result();
     <title>Berita - Wisata Gunung Pundhut</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"/>
+    <link rel="icon" href="logowgp.png" />
 </head>
 <body class="font-roboto bg-gray-100">
 <header class="sticky top-0 bg-teal-700 text-white p-6 shadow-lg z-50">
